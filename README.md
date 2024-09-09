@@ -1,6 +1,5 @@
 Link PWS : http://raisa-sakila-raisapetshop.pbp.cs.ui.ac.id/
 1. 
-Berikut adalah versi yang diperbaiki dan ditata dengan sub judul untuk meningkatkan struktur kalimat:
 
 # 1. Membuat Direktori Proyek Lokal dan Inisialisasi Git
 Langkah pertama dalam memulai proyek Django baru adalah membuat sebuah direktori lokal yang akan menjadi tempat kerja utama proyek ini. Karena proyek ini akan dipush ke Git untuk kontrol versi dan kolaborasi, saya memulai dengan menginisialisasi Git pada direktori proyek menggunakan perintah `git init`. Inisialisasi ini penting untuk melacak perubahan kode selama developeran.
@@ -45,49 +44,7 @@ Setelah proses developeran selesai, langkah terakhir adalah melakukan deployment
 6. Build Proyek: Setelah proses build berhasil, aplikasi saya bisa diakses publik melalui URL berikut: [http://raisa-sakila-raisapetshop.pbp.cs.ui.ac.id/](http://raisa-sakila-raisapetshop.pbp.cs.ui.ac.id/).
 
 2.
-### Bagan Alur Request dan Response Django
-
-```
-+-------------------+              +---------------------+
-|    Client         |              |  Web Application    |
-+-------------------+              +---------------------+
-           |                                 |
-           | HTTP Request                    |
-           |-------------------------------->|
-           |                                 |
-           |                                 |
-           |                +----------------+|
-           |                |    urls.py     ||
-           |                +----------------+|
-           |                                 |
-           |                                 |
-           |           URL Pattern Matching   |
-           |                +----------------+|
-           |                |    views.py    ||
-           |                +----------------+|
-           |                                 |
-           |                                 |
-           |          View Function Call      |
-           |                +----------------+|
-           |                |   models.py    ||
-           |                +----------------+|
-           |                                 |
-           |   Database Query / Data Retrieval |
-           |                                 |
-           |                                 |
-           |               +-----------------+|
-           |               |    HTML File    ||
-           |               +-----------------+|
-           |                                 |
-           |                                 |
-           |          Rendered HTML Response   |
-           |<--------------------------------|
-           |                                 |
-           |                                 |
-+-------------------+              +---------------------+
-|    Client         |              |  Web Application    |
-+-------------------+              +---------------------+
-```
+![Gambar Contoh](images/baganDjano.jpg)
 ### Alur Request
 
 1. Client mengirimkan request HTTP ke server. Kemudian, urls.py mencocokkan URL request dengan pola yang ada dan menentukan fungsi view yang akan menangani request. Selanjutnya views.py memproses request. views.py merupakan fungsi yang berinteraksi dengan models.py untuk mengambil atau memanipulasi data. Setelah itu, models.py melakukan query ke database dan mengembalikan data sesuai dengan atribut yang didefinisikan di models.py ke views.py. Setelah menerima data, views.py memilih HTML file (template) untuk merender data. Terakhir, HTML file dirender dan dikembalikan sebagai response ke Client.
@@ -137,4 +94,4 @@ Salah satu alasan utama Django sering dipilih untuk pembelajaran developeran per
 Django dirancang untuk mempermudah developeran aplikasi web, terutama bagi pemula. Django mengikuti prinsip “batteries included” yang berarti framework ini hadir dengan berbagai fitur built-in yang siap digunakan tanpa memerlukan konfigurasi manual yang rumit. Misalnya, Django sudah menyediakan sistem otentikasi pengguna, admin panel, manajemen database, dan lain-lain. Django membuat developeran aplikasi web berjalan cepat berkat alat seperti ORM (Object-Relational Mapping) untuk manajemen database, routing otomatis untuk URL, serta template engine yang mudah digunakan. Pemula dapat dengan cepat membuat aplikasi web fungsional tanpa harus menulis banyak kode dari nol. Django cocok untuk proyek kecil maupun besar. Meskipun pemula mungkin memulai dengan proyek sederhana, Django bisa diandalkan saat proyek tersebut tumbuh menjadi aplikasi besar. Fitur seperti caching, middlewares, dan kemampuan untuk mendukung berbagai jenis database membuatnya fleksibel untuk proyek dengan berbagai skala.
 
 5.
-Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena menyediakan cara untuk memetakan objek Python ke dalam struktur basis data relasional. Dengan menggunakan Django ORM, developer dapat mendefinisikan model sebagai kelas Python, di mana atribut kelas mewakili kolom dalam tabel database dan setiap instance model merepresentasikan baris dalam tabel tersebut. Django ORM menyederhanakan interaksi dengan basis data dengan menghilangkan kebutuhan untuk menulis query SQL secara langsung; sebaliknya, developer dapat melakukan operasi database menggunakan metode objek Python, dan ORM secara otomatis mengonversi operasi tersebut menjadi query SQL yang sesuai.
+Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena menyediakan cara untuk memetakan objek Python ke dalam struktur basis data relasional. Dengan menggunakan Django ORM, developer dapat mendefinisikan model sebagai kelas Python, di mana atribut kelas mewakili kolom dalam tabel database dan setiap instance model merepresentasikan baris dalam tabel tersebut. Django ORM menyederhanakan interaksi dengan basis data dengan menghilangkan kebutuhan untuk menulis query SQL secara langsung. Developer dapat melakukan operasi database menggunakan metode objek Python, dan ORM secara otomatis mengonversi operasi tersebut menjadi query SQL yang sesuai.

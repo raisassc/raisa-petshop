@@ -1,7 +1,7 @@
 from django.db import models
 
 class Product(models.Model):
-    product_image = models.ImageField(upload_to='product_images/', default='path/to/default_image.png')
+    product_image = models.ImageField(upload_to='product_images/')
     name = models.CharField(max_length=50)
     flavour = models.CharField(max_length=10, default='original')
     price = models.IntegerField()
