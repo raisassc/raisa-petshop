@@ -1,4 +1,4 @@
-Link PWS : http://raisa-sakila-raisapetshop.pbp.cs.ui.ac.id/
+Link PWS : http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/
 # 1. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
 # 1. Membuat Direktori Proyek Lokal dan Inisialisasi Git
@@ -45,7 +45,7 @@ Setelah proses developeran selesai, langkah terakhir adalah melakukan deployment
 3. Konfigurasi `ALLOWED_HOSTS`: Saya menambahkan URL deployment PWS ke daftar `ALLOWED_HOSTS` di file `settings.py`.
 4. Push ke GitHub: Saya melakukan `git add`, `commit`, dan `push` ke GitHub.
 5. Push ke PWS: Saya menambahkan PWS sebagai remote repository dan melakukan push dengan menjadikan direktori utama proyek sebagai branch.
-6. Build Proyek: Setelah proses build berhasil, aplikasi saya bisa diakses publik melalui URL berikut: [http://raisa-sakila-raisapetshop.pbp.cs.ui.ac.id/](http://raisa-sakila-raisapetshop.pbp.cs.ui.ac.id/).
+6. Build Proyek: Setelah proses build berhasil, aplikasi saya bisa diakses publik melalui URL berikut: [http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/](http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/).
 
 # 10. Membuat README.md
 setelah melakukan deployment, saya membuat file README.md di direkori utama. File ini bertujuan untuk menuliskan jawaban jawaban saya mengenai pertanyaan pertanyaan yang terdapat pada tugas 2. setelah itu saya melakukan commit dan push ke akun github 
