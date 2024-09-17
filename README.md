@@ -180,3 +180,5 @@ Setelah itu, saya melakukan import kedua fungsi tersebut pada `urls.py` lalu men
 ![Show_JSON](images/json.jpeg)
 ![Show_XML_by_ID](images/xml_id.jpeg)
 ![Show_JSON_by_ID](images/json_id.jpeg)
+
+Terima kasih
