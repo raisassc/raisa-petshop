@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_uvqf*tof@&=xyc9821scmc=^^=b+s^7km4&-nz-u@4^a5bo-y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id", "https://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -55,7 +55,7 @@ ROOT_URLCONF = 'raisa_petshop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -122,3 +122,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+MEDIA_URL = '/media/'  # URL untuk mengakses media files
+MEDIA_ROOT = BASE_DIR / 'media'  # Folder fisik tempat media files disimpan

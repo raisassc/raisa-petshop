@@ -1,9 +1,51 @@
-<h1>Raisa Pet Shop</h1>
+{% extends 'base.html' %}
+{% block content %}
+ <h1>Raisa Pet Shop</h1>
 
-<p>{{image}}</p>
-<h5>Nama Aplikasi: </h5>
-<p>{{app}}</p> 
-<h5>Nama: </h5>
-<p>{{name}}</p> 
-<h5>Class: </h5>
-<p>{{class}}</p> 
+ <h5>NPM: </h5>
+ <p>{{ npm }}<p>
+
+ <h5>Name:</h5>
+ <p>{{ name }}</p>
+
+ <h5>Class:</h5>
+ <p>{{ class }}</p>
+ 
+{% if not product_entries %}
+<p>Belum terdapat produk pada Raisa Pet Shop.</p>
+{% else %}
+<table>
+  <tr>
+    <th>Product Images</th>
+    <th>Product Name</th>
+    <th>Flavour</th>
+    <th>Price</th>
+    <th>Description</th>
+    <th>Netto (kg) </th>
+    <th>Category</th>
+    <th>Stock</th>
+    <th>Expired Date</th>
+  </tr>
+
+  {% for product_entry in product_entries %}
+  <tr>
+    <td><img src="{{ product_entry.product_image.url }}" alt="Product Image" width="100"></td>
+    <td>{{ product_entry.name }}</td>
+    <td>{{ product_entry.flavour }}</td>
+    <td>{{ product_entry.price }}</td>
+    <td>{{ product_entry.description }}</td>
+    <td>{{ product_entry.netto }}</td>
+    <td>{{ product_entry.category }}</td>
+    <td>{{ product_entry.stock }}</td>
+    <td>{{ product_entry.exp_date }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+
+<br />
+
+<a href="{% url 'main:create_product' %}">
+  <button>Add New Product</button>
+</a>
+{% endblock %}
