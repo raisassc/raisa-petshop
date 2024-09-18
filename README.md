@@ -1,6 +1,10 @@
 Link PWS : http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/
 # Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
+# Tugas 1
+
+<details>
+
 1. Membuat Direktori Proyek Lokal dan Inisialisasi Git
 Langkah pertama dalam memulai proyek Django baru adalah membuat sebuah direktori lokal yang akan menjadi tempat kerja utama proyek ini. Karena proyek ini akan dipush ke Git untuk kontrol versi dan kolaborasi, saya memulai dengan menginisialisasi Git pada direktori proyek menggunakan perintah `git init`. Inisialisasi ini penting untuk melacak perubahan kode selama pengembangan.
 
@@ -110,6 +114,10 @@ sumber : (https://rumahcoding.co.id/pengantar-django-orm-memahami-dan-menggunaka
 
 Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena menyediakan cara untuk memetakan objek Python ke dalam struktur basis data relasional. Dengan menggunakan Django ORM, developer dapat mendefinisikan model sebagai kelas Python, di mana atribut kelas mewakili kolom dalam tabel database dan setiap instance model merepresentasikan baris dalam tabel tersebut. Django ORM menyederhanakan interaksi dengan basis data dengan menghilangkan kebutuhan untuk menulis query SQL secara langsung. Developer dapat melakukan operasi database menggunakan metode objek Python, dan ORM secara otomatis mengonversi operasi tersebut menjadi query SQL yang sesuai.
 
+</details>
+
+# Tugas 2
+<detail>
 #  Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
 Proses pengembangan sebuah platform biasanya melibatkan beberapa lapisan atau komponen, seperti frontend, backend, dan database. Setiap komponen memiliki peran penting dalam pengembangan dan operasional platform. Agar platform dapat berfungsi secara efektif, data harus dapat dikirimkan dari satu stack ke stack lainnya dengan lancar. Di sinilah data delivery memainkan peran penting. Sebagai contoh, data yang diinput oleh pengguna melalui frontend harus dikirim ke backend untuk diproses, kemudian hasilnya disimpan atau diambil dari database sebelum dikirim kembali ke frontend untuk ditampilkan kepada pengguna. Tanpa mekanisme data delivery yang efisien, komunikasi antar komponen akan terganggu. Hal ini akan menyebabkan platform tidak berfungsi optimal, menjadi lambat, atau bahkan gagal dalam memenuhi kebutuhan pengguna.
@@ -180,6 +188,8 @@ Setelah itu, saya melakukan import kedua fungsi tersebut pada `urls.py` lalu men
 ![Show_JSON](images/json.jpeg)
 ![Show_XML_by_ID](images/xml_id.jpeg)
 ![Show_JSON_by_ID](images/json_id.jpeg)
+
+</details>
 
 
 Terima kasih
