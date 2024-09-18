@@ -2,7 +2,7 @@ Link PWS : http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/
 # Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
 1. Membuat Direktori Proyek Lokal dan Inisialisasi Git
-Langkah pertama dalam memulai proyek Django baru adalah membuat sebuah direktori lokal yang akan menjadi tempat kerja utama proyek ini. Karena proyek ini akan dipush ke Git untuk kontrol versi dan kolaborasi, saya memulai dengan menginisialisasi Git pada direktori proyek menggunakan perintah `git init`. Inisialisasi ini penting untuk melacak perubahan kode selama developeran.
+Langkah pertama dalam memulai proyek Django baru adalah membuat sebuah direktori lokal yang akan menjadi tempat kerja utama proyek ini. Karena proyek ini akan dipush ke Git untuk kontrol versi dan kolaborasi, saya memulai dengan menginisialisasi Git pada direktori proyek menggunakan perintah `git init`. Inisialisasi ini penting untuk melacak perubahan kode selama pengembangan.
 
 2. membuat virtual environment
 Membuat virtual environment sebelum memulai proyek Django merupakan langkah penting. Langkah ini memastikan proyek dapat berjalan di lingkungan yang terpisah. Dengan adanya virtual environment, proyek yang melibatkan kolaborasi antar developer dapat terhindar dari potensi konflik yang disebabkan oleh perbedaan konfigurasi perangkat. Pengaktifan dilakukan dengan perintah `env\Scripts\activate`
