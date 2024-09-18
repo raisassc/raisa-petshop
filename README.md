@@ -4,6 +4,7 @@ Link PWS : http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/
 # Tugas 1
 
 <details>
+
 # Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step
 
 1. Membuat Direktori Proyek Lokal dan Inisialisasi Git
@@ -118,7 +119,8 @@ Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena menyedi
 </details>
 
 # Tugas 2
-<detail>
+<details>
+
 #  Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
 
 Proses pengembangan sebuah platform biasanya melibatkan beberapa lapisan atau komponen, seperti frontend, backend, dan database. Setiap komponen memiliki peran penting dalam pengembangan dan operasional platform. Agar platform dapat berfungsi secara efektif, data harus dapat dikirimkan dari satu stack ke stack lainnya dengan lancar. Di sinilah data delivery memainkan peran penting. Sebagai contoh, data yang diinput oleh pengguna melalui frontend harus dikirim ke backend untuk diproses, kemudian hasilnya disimpan atau diambil dari database sebelum dikirim kembali ke frontend untuk ditampilkan kepada pengguna. Tanpa mekanisme data delivery yang efisien, komunikasi antar komponen akan terganggu. Hal ini akan menyebabkan platform tidak berfungsi optimal, menjadi lambat, atau bahkan gagal dalam memenuhi kebutuhan pengguna.
