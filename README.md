@@ -119,6 +119,7 @@ Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena menyedi
 </details>
 
 # Tugas 2
+
 <details>
 
 #  Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
