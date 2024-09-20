@@ -1,0 +1,35 @@
+body {
+    background-color: rgb(166, 154, 194); 
+}
+.container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.login {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px; 
+    text-align: center;
+}
+
+.login_btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #ca87ce;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.login_btn:hover {
+    background-color: #210323;
+}
+
+table {
+    margin: auto;
+}
