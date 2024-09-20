@@ -17,6 +17,7 @@ def show_main(request):
     context = {
         'app': 'Raisa Pet Shop',
         'name': request.user.username,
+        'npm' : '2306165755',
         'class': 'PBP C',
         'product_entries': product_entries,
         'last_login': request.COOKIES['last_login'],
