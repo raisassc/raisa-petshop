@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 @login_required(login_url='/login')
+
 def show_main(request):
     product_entries = Product.objects.filter(user=request.user)
     context = {

@@ -33,3 +33,66 @@ body {
 table {
     margin: auto;
 }
+.info-container{
+    width: 100%;
+    height: fit-content;
+
+}
+.info-user {
+    position:absolute;
+    top: 10 px;
+    left: 10 px;
+    font-size: 1.2em;
+}
+.petsho-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20 px;
+}
+
+.title {
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+.product-container {
+    display: flex;
+    flex-wrap: nowrap; /* Ensures that all items are in a single line */
+    overflow-x: auto; /* Enables horizontal scrolling */
+    gap: 16px; /* Adds some spacing between the product cards */
+    padding: 20px;
+    scroll-snap-type: x mandatory; /* Smooth snapping for horizontal scroll */
+}
+
+.product-card {
+    flex: 0 0 auto; /* Prevents the product card from shrinking */
+    width: 250px; /* Adjust the width as per your design */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    scroll-snap-align: start; /* Snap point for each card */
+}
+
+.product-card img {
+    width: 100%; /* Makes the image take up the full width of the card */
+    height: auto; /* Maintains aspect ratio */
+    border-radius: 8px;
+}
+
+.product-container::-webkit-scrollbar {
+    height: 8px; /* Adjust scrollbar height */
+}
+
+.product-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.product-container::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

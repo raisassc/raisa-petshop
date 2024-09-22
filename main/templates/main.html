@@ -1,58 +1,52 @@
 {% extends 'base.html' %}
 {% block content %}
-<div class="petshop-page"></div>
- <h1>Raisa Pet Shop</h1>
+<div class="info-container">
+  <div class="info-user">
+    <h5>NPM: </h5>
+    <p>{{ npm }}</p>
 
- <h5>NPM: </h5>
- <p>{{ npm }}<p>
+    <h5>Name:</h5>
+    <p>{{ name }}</p>
 
- <h5>Name:</h5>
- <p>{{ name }}</p>
+    <h5>Class:</h5>
+    <p>{{ class }}</p>
+  </div>
+</div>
 
- <h5>Class:</h5>
- <p>{{ class }}</p>
- 
+<div class="petshop-page">
+<div class="title">
+<h1>Raisa Pet Shop</h1>
+</div>
 {% if not product_entries %}
-<p>Belum terdapat produk pada Raisa Pet Shop.</p>
-{% else %}
-<table>
-  <tr>
-    <th>Product Images</th>
-    <th>Product Name</th>
-    <th>Flavour</th>
-    <th>Price</th>
-    <th>Description</th>
-    <th>Netto (kg) </th>
-    <th>Category</th>
-    <th>Stock</th>
-    <th>Expired Date</th>
-  </tr>
+    <p>Belum terdapat produk pada Raisa Pet Shop.</p>
+    {% else %}
+    <!-- Horizontal Scrollable Product Cards -->
+    <div class="product-container">
+        {% for product_entry in product_entries %}
+        <div class="product-card">
+            <img src="{{ product_entry.product_image.url }}" alt="Product Image">
+            <h4>{{ product_entry.name }}</h4>
+            <p>Flavour: {{ product_entry.flavour }}</p>
+            <p>Price: {{ product_entry.price }}</p>
+            <p>Description: {{product_entry.description}}</p>
+            <p>Netto: {{ product_entry.netto }} kg</p>
+            <p>Category: {{ product_entry.category }}</p>
+            <p>Stock: {{ product_entry.stock }}</p>
+            <p>Expires: {{ product_entry.exp_date }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 
-  {% for product_entry in product_entries %}
-  <tr>
-    <td><img src="{{ product_entry.product_image.url }}" alt="Product Image" width="100"></td>
-    <td>{{ product_entry.name }}</td>
-    <td>{{ product_entry.flavour }}</td>
-    <td>{{ product_entry.price }}</td>
-    <td>{{ product_entry.description }}</td>
-    <td>{{ product_entry.netto }}</td>
-    <td>{{ product_entry.category }}</td>
-    <td>{{ product_entry.stock }}</td>
-    <td>{{ product_entry.exp_date }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% endif %}
+<!-- Buttons for adding products and logout -->
+<div class="actions">
+    <a href="{% url 'main:create_product' %}">
+      <button>Add New Product</button>
+    </a>
+    <a href="{% url 'main:logout' %}">
+      <button>Logout</button>
+    </a>
+</div>
 
-<br />
-
-<a href="{% url 'main:create_product' %}">
-  <button>Add New Product</button>
-</a>
-
-<a href="{% url 'main:logout' %}">
-  <button>Logout</button>
-</a>
-
-<h5>Sesi terakhir login: {{ last_login }}</h5>
 {% endblock %}

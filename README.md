@@ -1,7 +1,7 @@
 Link PWS : http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id/
 
 
-# Tugas 1
+# Tugas 2
 
 <details>
 
@@ -118,7 +118,7 @@ Model pada Django disebut sebagai ORM (Object-Relational Mapping) karena menyedi
 
 </details>
 
-# Tugas 2
+# Tugas 3
 
 <details>
 
@@ -195,5 +195,149 @@ Setelah itu, saya melakukan import kedua fungsi tersebut pada `urls.py` lalu men
 
 </details>
 
+# Tugas 4
 
+<details>
+
+# Apa perbedaan antara HttpResponseRedirect() dan redirect()
+`HttpResponseRedirect` dan `redirect()` dalam Django memiliki perbedaan utama dalam fungsi dan kemudahan penggunaan. `HttpResponseRedirect` adalah subclass dari `HttpResponse` yang digunakan untuk melakukan redirect ke URL tertentu, di mana URL harus ditentukan secara eksplisit. Contohnya, `HttpResponseRedirect('/some/url/')` memerlukan penulisan manual URL, yang dapat meningkatkan risiko kesalahan. Di sisi lain, `redirect()` adalah fungsi yang lebih fleksibel karena fungsi ini dapat menerima model, nama tampilan, atau URL, dan akan menggunakan `reverse()` untuk menemukan URL yang sesuai berdasarkan nama tampilan. Ini membuat `redirect()` lebih mudah dan lebih bersih, seperti pada penggunaan `redirect('some-view-name', arg1='value1')`. `HttpResponseRedirect` tidak mendukung pengalihan berdasarkan model, sedangkan `redirect()` dapat menerima objek model dan secara otomatis memanggil metode `get_absolute_url()` untuk mendapatkan URL yang sesuai. 
+
+HttpResponseRedirect() memerlukan pemanggilan reverse() jika ingin menggunakan nama tampilan untuk mendapatkan URL, misalnya:
+`response = HttpResponseRedirect(reverse('main:login'))`
+redirect() dapat menerima berbagai jenis argumen, seperti nama tampilan, objek model, atau URL hardcoded. 
+`return redirect('main:login')`
+Secara otomatis menangani pemanggilan reverse() di dalamnya jika nama tampilan diberikan.
+
+# Jelaskan cara kerja penghubungan model Product dengan User!
+Dalam model Product, atribut yang merujuk ke User didefinisikan dengan menggunakan ForeignKey. Hal tesebut menunjukkan bahwa setiap produk terkait dengan satu pengguna (pemilik produk).
+from django.db import models
+from django.contrib.auth.models import User
+class Product(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    product_image = models.ImageField(upload_to='media/')
+   .....
+
+Setiap kali produk dibuat, pengguna yang membuat produk tersebut diatur melalui atribut user. Dengan cara ini, setiap produk dapat dengan mudah dilacak dan dikelompokkan berdasarkan pemiliknya.
+Jika pengguna dihapus (on_delete=models.CASCADE), maka semua produk yang terkait dengan pengguna tersebut juga akan dihapus.
+Dalam views.py, dapat dengan mudah mengambil produk milik pengguna tertentu. 
+`product_entries = Product.objects.filter(user=request.user)`
+Dengan cara ini, penghubungan antara model Product dan User memudahkan pengelolaan dan pelacakan produk berdasarkan pemiliknya secara efisien dalam aplikasi Django.
+
+# Apa perbedaan antara authentication dan authorization, apakah yang dilakukan saat pengguna login? Jelaskan bagaimana Django mengimplementasikan kedua konsep tersebut.
+Autentikasi (Authentication)
+Definisi: Autentikasi adalah proses untuk memverifikasi identitas pengguna. Dalam Django, proses autentikasi melibatkan pengecekan kredensial seperti username dan password untuk memastikan bahwa pengguna adalah siapa yang mereka klaim.
+Cara Kerja di Django:
+Pengguna memasukkan username dan password mereka.
+Django memverifikasi kredensial tersebut menggunakan model User (django.contrib.auth.models.User).
+Jika kredensial benar, Django mengizinkan akses ke sesi pengguna.
+Autentikasi penting karena memastikan bahwa hanya pengguna yang sah yang dapat mengakses aplikasi atau sistem. Proses ini melindungi aplikasi dari akses tidak sah dan menjaga keamanan data.
+Otorisasi (Authorization)
+Definisi: Otorisasi adalah proses menentukan dan memberikan izin kepada pengguna yang sudah terautentikasi untuk mengakses atau melakukan tindakan tertentu dalam sistem. Proses otorisasi memastikan bahwa pengguna hanya dapat mengakses data dan fitur sesuai dengan hak akses yang diberikan.
+Cara Kerja di Django:
+Setelah pengguna terautentikasi, Django menggunakan mekanisme seperti grup, izin (permissions), dan level akses untuk menentukan apa yang dapat dilakukan oleh pengguna.
+Django mengelola izin menggunakan model Group dan Permission, yang memungkinkan pengaturan akses ke berbagai bagian aplikasi.
+Autentikasi penting karena memastikan bahwa hanya pengguna yang sah yang dapat mengakses aplikasi atau sistem. Proses ini melindungi aplikasi dari akses tidak sah dan menjaga keamanan data. Sedangkan, otorisasi penting karena mengontrol tindakan apa yang dapat dilakukan oleh pengguna setelah mereka login. Proses ini memastikan bahwa pengguna hanya dapat mengakses dan melakukan tindakan yang sesuai dengan hak akses yang diberikan kepada mereka.
+Sumber : [https://www.geeksforgeeks.org/difference-between-authentication-and-authorization/)]
+
+# Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+Cookies adalah potongan kecil data yang dikirim oleh server web ke browser pengguna dan disimpan di sisi klien. Cookies digunakan untuk mengingat informasi antara kunjungan pengguna ke situs web. Mereka berfungsi mirip dengan gelang pengunjung di taman hiburan.
+
+Cookies digunakan dalam website dengan melakukan hal berikut : 
+1. Autentikasi : Cookies menyimpan ID sesi pengguna setelah login. ID sesi ini digunakan untuk mengenali pengguna dalam kunjungan berikutnya tanpa perlu login ulang.
+
+2. Pelacakan: Cookies dapat digunakan untuk melacak aktivitas pengguna di situs web, seperti item yang ditambahkan ke keranjang belanja.
+
+3. Mempertahankan Preferensi: Cookies menyimpan preferensi pengguna, seperti mode gelap, sehingga preferensi ini dipertahankan di antara kunjungan.
+
+Dalam Django, cookies digunakan terutama untuk mengelola sesi pengguna. Berikut adalah beberapa cara Django menggunakan cookies:
+
+1. ID Sesi : Django menyimpan ID sesi pengguna dalam cookie. Setiap kali pengguna mengunjungi situs, cookie ini dikirim kembali ke server dengan setiap permintaan. Django menggunakan ID sesi untuk mengambil data sesi yang sesuai dan mengelola status pengguna.
+
+2. Konfigurasi Sesi: Django mengizinkan konfigurasi berbagai aspek terkait cookies sesi, termasuk nama cookie (`SESSION_COOKIE_NAME`), masa berlaku (`SESSION_COOKIE_AGE`), dan pengaturan keamanan (`SESSION_COOKIE_SECURE` dan `SESSION_COOKIE_HTTPONLY`)
+3. Pengelolaan Cookie**: Anda dapat menggunakan `HttpResponse` untuk mengatur cookies baru dan `request.COOKIES` untuk membaca cookies yang dikirimkan oleh browser.
+
+   ```python
+   # Menyimpan cookie
+   response = HttpResponse("Cookie Set")
+   response.set_cookie('my_cookie', 'cookie_value')
+
+   # Membaca cookie
+   cookie_value = request.COOKIES.get('my_cookie', 'default_value')
+
+   ```
+Penggunaan cookies dalam pengembangan web tidak sepenuhnya aman secara default. Meskipun cookies sangat berguna untuk mengelola sesi pengguna, ada beberapa risiko potensial yang harus diwaspadai:
+
+1. Serangan Man-in-the-Middle (MitM):
+Jika cookie dikirimkan melalui koneksi yang tidak aman (HTTP), seorang penyerang dapat menangkap cookie dan mengakses data pengguna. Pengguna dapat menggunakan HTTPS untuk enkripsi data selama transmisi dan tambahkan atribut `Secure` pada cookie, sehingga cookie hanya dikirimkan melalui koneksi HTTPS.
+
+2. Serangan Cross-Site Scripting (XSS):
+Jika situs web rentan terhadap XSS, penyerang dapat menyuntikkan kode berbahaya yang dapat mengakses dan mencuri cookie dari browser pengguna. Pengguna dapat menambahkan atribut `HttpOnly` pada cookie sehingga cookie tidak dapat diakses melalui JavaScript. Selain itu, pengguna harus memastikan bahwa input disanitasi dengan benar.
+
+3. Serangan Cross-Site Request Forgery (CSRF):
+Penyerang dapat memanfaatkan cookie yang ada untuk melakukan tindakan tidak sah atas nama pengguna. Pengguna dapat menambahkan atribut `SameSite` untuk mengontrol kapan cookie dikirimkan. Nilai `SameSite=Strict` atau `SameSite=Lax` dapat membantu mencegah serangan CSRF dengan membatasi pengiriman cookie ke konteks yang sama dengan yang mengatur cookie.
+
+4. Penyimpanan Informasi Sensitif:
+ Menyimpan informasi sensitif seperti kata sandi atau data pribadi dalam cookie dapat menambah risiko jika cookie dicuri.
+
+Sumber : [https://www.freecodecamp.org/news/everything-you-need-to-know-about-cookies-for-web-development/]
+
+# Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+
+1. Aktivasi Environment
+Langkah pertama yang saya lakukan adalah mengaktifkan virtual environment terlebih dahulu. Hal ini dilakukan agar paket yang terdapat pada proyek saya tidak bertabrakan dengan proyek lainnya. 
+2. Membuat fungsi register
+Selanjutnya, saya melakukan impor `UserCreationForm` yang digunakan untuk pembuatan formulir pendaftaran pengguna dalam aplikasi web, serta `messages`. Kemudian, saya membuat berkas HTML untuk formulir registrasi dengan nama `register.html` di direktori `main/templates`. Berkas `register.html` ini akan diimpor ke dalam `views.py`, dan selanjutnya akan dirender oleh fungsi `register` pada `views.py`. Setelah itu, saya menambahkan fungsi `register` di `views.py` yang digunakan untuk membuat formulir registrasi secara otomatis dan membuat akun pengguna ketika data disubmit. Untuk memvalidasi input dari pengguna, saya menggunakan metode `is_valid()`. Jika isi formulir sudah valid, saya memanggil metode `messages.success` untuk menginformasikan kepada pengguna bahwa akunnya telah berhasil dibuat. Selanjutnya, formulir akan disimpan. Dalam fungsi ini, konteks yang berisi formulir akan dirender ke `register.html` sebagai hasil dari permintaan.
+3. Menambahkan menu login
+Setelah menambahkan fungsi `register`, saya membuat fungsi `login`. Pertama, saya mengimpor `authenticate`, `login`, dan `AuthenticationForm` dari `django.contrib.auth.forms` dan `django.contrib.auth` untuk melakukan otentikasi dan login. Selanjutnya, saya membuat template untuk login, yaitu `login.html`. Setelah membuat template login, saya menambahkan fungsi di `views.py` untuk melakukan login.  Fungsi `login_user` akan melakukan autentikasi terlebih dahulu, kemudian jika data yang dimasukkan valid, pengguna akan diarahkan ke fungsi `show_main` di `views.py`. Jika salah, pengguna akan diminta untuk memasukkan data kembali. Selanjutnya, konteks yang berisi formulir akan dirender dengan `login.html` sebagai respons terhadap permintaan. Fungsi `login_user` ini akan diimpor ke `urls.py` untuk pemetaan dengan URL login. Path `'login/'` akan diarahkan ke fungsi `login_user`.
+4. Menambahkan fungsi logout
+Untuk fungsi logout, pertama-tama saya mengimpor fungsi `logout` di `views.py`. Fungsi `logout_user` ini akan mengarahkan pengguna kembali ke halaman login. Pada fungsi logout ini, tidak diperlukan berkas HTML sendiri, karena fungsi logout akan langsung mengembalikan pengguna ke halaman login. Kita hanya perlu menambahkan tombol logout dan hyperlink untuk mengarahkan halaman ke fungsi logout di `main.html`. Tentu saja, kita perlu mengimpor fungsi `logout_user` di `urls.py` agar URL `login/` dapat dipetakan ke fungsi `logout_user` di `views.py`.
+5. Retriksi halaman main
+Untuk membatasi akses ke halaman utama, kita perlu menambahkan dekorator yang mengharuskan pengguna untuk login terlebih dahulu. Hal ini dilakukan dengan mengimpor `login_required` dari `django.contrib.auth.decorators` dan menambahkan `@login_required(login_url='/login')` sebelum fungsi `show_main`. Dengan demikian, ketika URL dibuka, pengguna akan diarahkan ke halaman login terlebih dahulu.
+6. Penggunaan cookie
+Untuk menggunakan data dari cookies, kita perlu mengimpor `HttpResponseRedirect`, `reverse`, dan `datetime`. Setelah itu, saya menambahkan kode pada fungsi `login_user` sebagai berikut:
+```python
+login(request, user)  # Melakukan login terlebih dahulu
+response = HttpResponseRedirect(reverse("main:show_main"))  # Membuat respons
+response.set_cookie('last_login', str(datetime.datetime.now()))  # Membuat cookie last_login dan menambahkannya ke respons
+```
+Kemudian, untuk menampilkan 'last_login', saya menambahkan:
+```html
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+```
+Terakhir, saya menambahkan `response.delete_cookie('last_login')` untuk menghapus cookie `last_login` saat pengguna melakukan logout.
+7. Menghubungkan `product` dengan `user`
+Pertama, saya membuka `models.py` di dalam direktori `main` dan menambahkan kode berikut untuk menghubungkan model `Product` dengan model `User` dari Django:
+```python
+from django.contrib.auth.models import User
+```
+Kemudian, saya menambahkan kode `user = models.ForeignKey(User, on_delete=models.CASCADE)` di model `Product`. ForeignKey pada model `Product` menghubungkan setiap produk dengan satu pengguna (User). Opsi `on_delete=models.CASCADE` artinya jika pengguna dihapus, semua produk yang dimiliki pengguna tersebut juga akan dihapus. Setelah itu, saya membuka `views.py` dan mengubah fungsi `create_product` sebagai berikut:
+```python
+product_entry = form.save(commit=False)
+product_entry.user = request.user
+```
+`commit=False` digunakan untuk mencegah produk langsung disimpan ke database. 
+Saya menambahkannya agar dapat menetapkan pengguna yang sedang login terlebih dahulu sebelum menyimpan produk. Untuk menampilkan produk yang hanya dimiliki oleh pengguna yang sedang login, saya mengubah fungsi `show_main` menjadi:
+```python
+def show_main(request):
+    products = Product.objects.filter(user=request.user)
+```
+Fungsi ini menyaring objek `Product` dan hanya menampilkan produk yang dimiliki oleh pengguna yang sedang login dengan memanfaatkan `filter(user=request.user)`.
+Sebelum melakukan migrasi, saya memastikan bahwa ada setidaknya satu pengguna di dalam database. Selanjutnya, saya menjalankan migrasi model dengan perintah berikut:
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+Saya juga membuka `settings.py` dan menambahkan variabel `PRODUCTION` serta mengubah pengaturan `DEBUG`:
+```python
+import os
+
+PRODUCTION = os.getenv("PRODUCTION", False)
+DEBUG = not PRODUCTION
+```
+
+
+
+
+</details>
 Terima kasih
