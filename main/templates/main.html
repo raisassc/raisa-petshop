@@ -2,41 +2,37 @@
 {% block content %}
 <div class="info-container">
   <div class="info-user">
-    <h5>NPM: </h5>
-    <p>{{ npm }}</p>
-
-    <h5>Name:</h5>
-    <p>{{ name }}</p>
-
-    <h5>Class:</h5>
-    <p>{{ class }}</p>
+    <p>Name :{{ name }}</p>
   </div>
 </div>
 
 <div class="petshop-page">
-<div class="title">
-<h1>Raisa Pet Shop</h1>
-</div>
-{% if not product_entries %}
-    <p>Belum terdapat produk pada Raisa Pet Shop.</p>
-    {% else %}
-    <!-- Horizontal Scrollable Product Cards -->
-    <div class="product-container">
-        {% for product_entry in product_entries %}
-        <div class="product-card">
-            <img src="{{ product_entry.product_image.url }}" alt="Product Image">
-            <h4>{{ product_entry.name }}</h4>
-            <p>Flavour: {{ product_entry.flavour }}</p>
-            <p>Price: {{ product_entry.price }}</p>
-            <p>Description: {{product_entry.description}}</p>
-            <p>Netto: {{ product_entry.netto }} kg</p>
-            <p>Category: {{ product_entry.category }}</p>
-            <p>Stock: {{ product_entry.stock }}</p>
-            <p>Expires: {{ product_entry.exp_date }}</p>
+  <div class="title">
+    <h1>Raisa Pet Shop</h1>
+  </div>
+
+  {% if not product_entries %}
+      <p>Belum terdapat produk pada Raisa Pet Shop.</p>
+  {% else %}
+      <!-- Product Carousel with Left and Right Buttons -->
+      <div class="carousel-container">
+        <div class="product-container">
+          {% for product_entry in product_entries %}
+            <div class="product-card">
+              <img src="{{ product_entry.product_image.url }}" alt="Product Image">
+              <h4>{{ product_entry.name }}</h4>
+              <p>Flavour: {{ product_entry.flavour }}</p>
+              <p>Price: {{ product_entry.price }}</p>
+              <p>Description: {{ product_entry.description }}</p>
+              <p>Netto: {{ product_entry.netto }} kg</p>
+              <p>Category: {{ product_entry.category }}</p>
+              <p>Stock: {{ product_entry.stock }}</p>
+              <p>Expired Date: {{ product_entry.exp_date }}</p>
+            </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-    </div>
-    {% endif %}
+      </div>
+  {% endif %}
 </div>
 
 <!-- Buttons for adding products and logout -->
@@ -49,4 +45,5 @@
     </a>
 </div>
 
+<h5>Sesi terakhir login: {{ last_login }}</h5>
 {% endblock %}
