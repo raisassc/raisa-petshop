@@ -13,6 +13,8 @@ from django.urls import reverse
 
 @login_required(login_url='/login')
 
+# fungsi untuk menampilkan menu
+
 def show_main(request):
     product_entries = Product.objects.filter(user=request.user)
     context = {
