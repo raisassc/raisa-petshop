@@ -6,94 +6,17 @@
 <div class="min-h-screen bg-purple-50 py-10">
   <div class="max-w-3xl mx-auto bg-purple-100 p-8 rounded-lg shadow-md">
     <h1 class="text-3xl font-bold text-purple-800 text-center mb-6">Add New Product</h1>
-    
-    <!-- Form for Adding New Product -->
-    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <table class="w-full">
+        {{ form.as_table }}
         <tr>
-          <td class="pt-4">{{ form.name.label }}</td>
-          <td class="pt-4">
-            <input type="text" name="{{ form.name.name }}" value="{{ form.name.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.name.label }}">
-            {% if form.name.errors %}
-              <p class="text-red-600 text-sm">{{ form.name.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.flavour.label }}</td>
-          <td class="pt-4">
-            <input type="text" name="{{ form.flavour.name }}" value="{{ form.flavour.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.flavour.label }}">
-            {% if form.flavour.errors %}
-              <p class="text-red-600 text-sm">{{ form.flavour.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.price.label }}</td>
-          <td class="pt-4">
-            <input type="number" name="{{ form.price.name }}" value="{{ form.price.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.price.label }}">
-            {% if form.price.errors %}
-              <p class="text-red-600 text-sm">{{ form.price.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.product_image.label }}</td>
-          <td class="pt-4">
-            <input type="file" name="{{ form.product_image.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" accept="image/png, image/jpeg">
-            {% if form.product_image.value %}
-                <img src="{{ form.product_image.value.url }}" alt="Uploaded Image" class="mt-2 max-w-full h-auto" />
-            {% endif %}
-            {% if form.product_image.errors %}
-              <p class="text-red-600 text-sm">{{ form.product_image.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.description.label }}</td>
-          <td class="pt-4">
-            <textarea name="{{ form.description.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.description.label }}">{{ form.description.value }}</textarea>
-            {% if form.description.errors %}
-              <p class="text-red-600 text-sm">{{ form.description.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.netto.label }}</td>
-          <td class="pt-4">
-            <input type="number" name="{{ form.netto.name }}" value="{{ form.netto.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.netto.label }}">
-            {% if form.netto.errors %}
-              <p class="text-red-600 text-sm">{{ form.netto.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.category.label }}</td>
-          <td class="pt-4">
-            <input type="text" name="{{ form.category.name }}" value="{{ form.category.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.category.label }}">
-            {% if form.category.errors %}
-              <p class="text-red-600 text-sm">{{ form.category.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4">{{ form.stock.label }}</td>
-          <td class="pt-4">
-            <input type="number" name="{{ form.stock.name }}" value="{{ form.stock.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.stock.label }}">
-            {% if form.stock.errors %}
-              <p class="text-red-600 text-sm">{{ form.stock.errors }}</p>
-            {% endif %}
-          </td>
-        </tr>
-        <tr>
-          <td class="pt-4"></td>
-          <td class="pt-4">
-            <div class="flex justify-between">
-              <!-- Submit Button -->
-              <input type="submit" value="Add Product" class="py-2 px-6 bg-purple-600 text-white rounded-lg cursor-pointer hover:bg-purple-700 transition-all duration-300">
-              <!-- Reset Button -->
-              <input type="reset" value="Reset Form" class="py-2 px-6 bg-gray-300 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-400 transition-all duration-300">
+          <td></td>
+          <td>
+            <div class="flex justify-between mt-4">
+              <input type="submit" value="Add Product" class="py-2 px-6 bg-purple-600 text-white rounded-lg cursor-pointer hover:bg-purple-700 transition-all duration-300" />
+              <input type="reset" value="Reset Form" class="py-2 px-6 bg-gray-300 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-400 transition-all duration-300" />
             </div>
           </td>
         </tr>
