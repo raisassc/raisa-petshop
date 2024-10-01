@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.http import HttpResponse
 from django.core import serializers
 from main.forms import productForm
@@ -93,3 +93,25 @@ def logout_user(request):
     response.delete_cookie('last_login')
     return response
 
+def edit_product(request, id):
+    # Get mood entry berdasarkan id
+    product = Product.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = productForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+
+def delete_product(request, id):
+    # Get mood berdasarkan id
+    eachProduct = Product.objects.get(pk = id)
+    # Hapus mood
+    eachProduct.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))

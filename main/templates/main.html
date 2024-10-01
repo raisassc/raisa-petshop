@@ -1,49 +1,53 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-<div class="info-container">
-  <div class="info-user">
-    <p>Name :{{ name }}</p>
+{% include 'navbar.html' %}
+<div class="flex items-center justify-between p-4 bg-purple-50">
+  <div class="flex items-center">
   </div>
 </div>
 
-<div class="petshop-page">
-  <div class="title">
-    <h1>Raisa Pet Shop</h1>
-  </div>
+<!-- Konten Petshop -->
+<div class="petshop-page flex flex-col items-center mt-12">
+  <div class="title text-center text-5xl font-bold mb-5 text-purple-700">Raisa Pet Shop 🐾</div>
 
-  {% if not product_entries %}
-      <p>Belum terdapat produk pada Raisa Pet Shop.</p>
-  {% else %}
-      <!-- Product Carousel with Left and Right Buttons -->
-      <div class="carousel-container">
-        <div class="product-container">
-          {% for product_entry in product_entries %}
-            <div class="product-card">
-              <img src="{{ product_entry.product_image.url }}" alt="Product Image">
-              <h4>{{ product_entry.name }}</h4>
-              <p>Flavour: {{ product_entry.flavour }}</p>
-              <p>Price: {{ product_entry.price }}</p>
-              <p>Description: {{ product_entry.description }}</p>
-              <p>Netto: {{ product_entry.netto }} kg</p>
-              <p>Category: {{ product_entry.category }}</p>
-              <p>Stock: {{ product_entry.stock }}</p>
-              <p>Expired Date: {{ product_entry.exp_date }}</p>
-            </div>
-          {% endfor %}
-        </div>
+  <div class="carousel-container relative w-full max-w-3xl overflow-hidden flex items-center justify-center">
+      <div class="product-container flex overflow-x-auto scroll-smooth gap-4 p-5 box-border max-w-[400px]">
+          {% if product_entries %}
+              {% for product_entry in product_entries %}
+                  {% include 'card_product.html' %}
+              {% endfor %}
+          {% else %}
+              <!-- Gambar Kucing Sedih jika tidak ada produk -->
+              <div class="flex flex-col items-center">
+                  <img src="{% static 'images/sad_cat.gif' %}" alt="Sad Cat" class="w-48 h-48 mb-4">
+                  <p class="text-purple-600 font-semibold">Oops! Tidak ada produk yang tersedia.</p>
+              </div>
+          {% endif %}
       </div>
-  {% endif %}
+  </div>
+
+  <div class="actions text-gray-400 mt-5 flex gap-2 justify-center">
+      <a href="{% url 'main:create_product' %}">
+          <button class="py-2 px-5 bg-purple-500 text-white rounded hover:bg-purple-600">Add New Product</button>
+      </a>
+  </div>
+
+  <h5 class="mt-2 text-purple-600">Sesi terakhir login: {{ last_login }}</h5>
 </div>
 
-<!-- Buttons for adding products and logout -->
-<div class="actions">
-    <a href="{% url 'main:create_product' %}">
-      <button>Add New Product</button>
-    </a>
-    <a href="{% url 'main:logout' %}">
-      <button>Logout</button>
-    </a>
-</div>
+<style>
+  .product-container::-webkit-scrollbar {
+      height: 8px;
+  }
 
-<h5>Sesi terakhir login: {{ last_login }}</h5>
+  .product-container::-webkit-scrollbar-thumb {
+      background-color: #c3a6d9;
+      border-radius: 4px;
+  }
+
+  .product-container::-webkit-scrollbar-thumb:hover {
+      background-color: #a87cc6;
+  }
+</style>
 {% endblock %}

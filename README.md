@@ -255,7 +255,7 @@ Dalam Django, cookies digunakan terutama untuk mengelola sesi pengguna. Berikut 
 1. ID Sesi : Django menyimpan ID sesi pengguna dalam cookie. Setiap kali pengguna mengunjungi situs, cookie ini dikirim kembali ke server dengan setiap permintaan. Django menggunakan ID sesi untuk mengambil data sesi yang sesuai dan mengelola status pengguna.
 
 2. Konfigurasi Sesi: Django mengizinkan konfigurasi berbagai aspek terkait cookies sesi, termasuk nama cookie (`SESSION_COOKIE_NAME`), masa berlaku (`SESSION_COOKIE_AGE`), dan pengaturan keamanan (`SESSION_COOKIE_SECURE` dan `SESSION_COOKIE_HTTPONLY`)
-3. Pengelolaan Cookie**: Anda dapat menggunakan `HttpResponse` untuk mengatur cookies baru dan `request.COOKIES` untuk membaca cookies yang dikirimkan oleh browser.
+3. Pengelolaan Cookie: dapat menggunakan `HttpResponse` untuk mengatur cookies baru dan `request.COOKIES` untuk membaca cookies yang dikirimkan oleh browser.
 
    ```python
    # Menyimpan cookie
@@ -341,3 +341,383 @@ DEBUG = not PRODUCTION
 
 </details>
 Terima kasih
+
+Tugas 5
+
+<details>
+
+# Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+
+**Cascading Style Sheets (CSS)** adalah bahasa pemrograman yang digunakan untuk mengatur tampilan halaman web. Salah satu karakteristik utama CSS adalah konsep **cascading**, yang merujuk pada bagaimana berbagai aturan CSS diprioritaskan dan diterapkan ketika beberapa aturan bersaing untuk elemen yang sama. Prinsip ini mencakup **prioritas berdasarkan sumber CSS** serta **spesifisitas selector**.
+
+### 1. **Urutan Prioritas Berdasarkan Sumber CSS**
+Jika terdapat beberapa aturan CSS dari berbagai sumber yang mengatur properti yang sama, maka urutan penerapannya, dari yang paling kuat hingga paling lemah, adalah sebagai berikut:
+
+#### a. **Inline Style**
+Inline style adalah gaya yang ditulis langsung dalam atribut elemen HTML, contohnya:
+```html
+<h2 style="color: green;">Teks ini akan berwarna hijau</h2>
+```
+Style ini memiliki **prioritas tertinggi** karena langsung melekat pada elemen HTML. Gaya inline selalu menang atas gaya lain yang didefinisikan di internal atau eksternal stylesheet.
+
+#### b. **Internal Style (Embedded Style)**
+Internal style adalah gaya yang ditulis di dalam tag `<style>` pada bagian `<head>` dari dokumen HTML. Contohnya:
+```html
+<head>
+  <style>
+    h2 {
+      color: red;
+    }
+  </style>
+</head>
+```
+Internal style memiliki prioritas di bawah inline style, tetapi lebih tinggi dari eksternal stylesheet. Gaya ini sering digunakan jika ingin mengatur gaya yang hanya berlaku pada halaman tertentu saja.
+
+#### c. **Eksternal Style**
+Eksternal style didefinisikan dalam file terpisah dengan ekstensi `.css`, kemudian dihubungkan ke dokumen HTML menggunakan tag `<link>`:
+```html
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+```
+Eksternal style sheet memiliki prioritas paling rendah dibandingkan dengan inline dan internal style. Meskipun demikian, eksternal style sheet sering digunakan untuk mengatur gaya halaman web karena memudahkan manajemen dan mempromosikan pemisahan konten dari gaya.
+
+### 2. **Prioritas Berdasarkan Spesifisitas Selector**
+Selain urutan dari sumber, prioritas dalam CSS juga ditentukan oleh **spesifisitas** (specificity) selector. Spesifisitas diukur berdasarkan tipe selector yang digunakan untuk menarget elemen HTML. Urutan spesifisitas dari yang paling spesifik hingga yang paling umum adalah sebagai berikut:
+
+#### a. **ID Selector**
+Selector ID memiliki prioritas paling tinggi di antara selector CSS biasa. ID adalah unik dalam dokumen HTML, dan didefinisikan menggunakan tanda `#`:
+```css
+#header {
+  color: blue;
+}
+```
+Jika elemen ditargetkan oleh ID, aturan ini akan lebih diutamakan dibandingkan class atau tag selector.
+
+#### b. **Class Selector, Attribute Selector, Pseudo-class**
+Selector class (misal: `.class`), attribute selector (misal: `[type="text"]`), dan pseudo-class (misal: `:hover`) memiliki prioritas menengah. Contohnya:
+```css
+.button {
+  color: green;
+}
+```
+Selector ini lebih spesifik daripada tag selector tetapi kalah prioritas dari ID selector.
+
+#### c. **Tag Selector dan Pseudo-element**
+Tag selector menarget elemen berdasarkan nama tag HTML, seperti `div`, `h1`, atau `p`. Ini adalah selector dengan spesifisitas paling rendah. Contoh:
+```css
+h2 {
+  color: red;
+}
+```
+Pseudo-element seperti `::before` dan `::after` juga memiliki prioritas yang setara dengan tag selector.
+
+### 3. **Aturan Prioritas Umum CSS**
+Ada beberapa aturan penting dalam cascading CSS yang perlu diingat:
+1. **Inline style** selalu memiliki prioritas lebih tinggi dibanding internal dan eksternal style.
+2. Jika dua aturan memiliki spesifisitas yang sama, aturan yang **dideklarasikan lebih akhir** dalam file akan diterapkan. Ini disebut sebagai **"last rule wins"**.
+3. Deklarasi CSS yang menggunakan **`!important`** akan selalu menang atas aturan lainnya, bahkan jika aturan lain memiliki spesifisitas lebih tinggi. Contoh:
+    ```css
+    h2 {
+      color: red !important;
+    }
+    ```
+
+    Dalam kasus ini, meskipun ada selector dengan spesifisitas lebih tinggi atau inline style, aturan `!important` akan tetap diutamakan.
+
+### 4. **Kombinasi Selector**
+CSS memungkinkan penggunaan kombinasi selector yang lebih kompleks. Semakin spesifik kombinasi selector, semakin tinggi prioritasnya. Misalnya:
+```css
+#main .button:hover {
+  color: yellow;
+}
+```
+Pada contoh di atas, kombinasi selector `#main .button:hover` lebih spesifik dibanding selector tunggal seperti `.button` atau `#main`.
+
+### Contoh Penerapan Spesifisitas
+Misalkan kita memiliki elemen HTML berikut:
+```html
+<h2 class="title" id="main-title">Teks ini berwarna apa?</h2>
+```
+Dan beberapa aturan CSS berikut:
+```css
+h2 {
+  color: blue;
+}
+
+.title {
+  color: green;
+}
+
+#main-title {
+  color: red;
+}
+
+h2 {
+  color: yellow !important;
+}
+```
+Urutan prioritas yang berlaku adalah:
+1. **Aturan dengan `!important`** (warna kuning) diterapkan, meskipun ada ID selector.
+2. Jika tidak ada `!important`, warna merah dari selector ID `#main-title` akan diterapkan, karena ID selector memiliki prioritas tertinggi.
+3. Jika tidak ada ID, warna hijau dari class `.title` akan diterapkan, karena class lebih spesifik daripada tag.
+4. Jika hanya ada selector tag, warna biru akan diterapkan.
+<sumber : https://stackoverflow.com/questions/4072365/understanding-css-selector-priority-specificity, https://www.duniailkom.com/tutorial-belajar-css-urutan-prioritas-selector-css-cascading/, https://stackoverflow.com/questions/25105736/what-is-the-order-of-precedence-for-css>
+
+# Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design!
+
+**Responsive design** sangat penting dalam pengembangan aplikasi web karena memastikan bahwa situs atau aplikasi dapat diakses dengan baik di berbagai perangkat, seperti ponsel, tablet, dan desktop, yang memiliki ukuran layar berbeda. Dengan semakin meningkatnya penggunaan perangkat mobile, memiliki desain yang responsif meningkatkan pengalaman pengguna dan membuat situs lebih mudah diakses oleh lebih banyak orang.
+
+Beberapa alasan mengapa responsive design penting adalah:
+
+1. **Pengalaman Pengguna yang Lebih Baik**: Desain yang responsif menyesuaikan tampilan sesuai dengan perangkat yang digunakan. Ini mengurangi kebutuhan untuk zoom atau scrolling horizontal, meningkatkan kenyamanan dan interaksi pengguna.
+   
+2. **SEO yang Lebih Baik**: Google memberikan preferensi pada situs dengan desain responsif karena lebih mudah diindeks dan menghindari masalah konten duplikat yang bisa terjadi pada situs dengan versi terpisah untuk mobile dan desktop.
+   
+3. **Efektivitas Biaya dan Waktu**: Alih-alih membuat beberapa versi situs untuk berbagai perangkat, satu situs dengan desain responsif dapat diakses dari berbagai perangkat, sehingga lebih hemat dalam hal pemeliharaan dan pembaruan.
+   
+4. **Peningkatan Konversi dan Penjualan**: Desain yang responsif memudahkan pengguna untuk mengakses informasi atau melakukan pembelian dari perangkat apa pun, sehingga meningkatkan peluang konversi dan penjualan.
+
+**Contoh aplikasi yang sudah menerapkan responsive design**:
+- **Spotify**: Website Spotify dapat diakses dengan baik dari berbagai perangkat dengan tampilan yang menyesuaikan secara otomatis sesuai ukuran layar.
+- **Airbnb**: Desain responsif Airbnb membuat pengguna mudah mencari dan memesan akomodasi dari berbagai perangkat, baik dari ponsel, tablet, maupun komputer.
+
+**Contoh aplikasi yang belum menerapkan responsive design**:
+- **Situs-situs web lama** yang dirancang sebelum tren desain responsif seperti situs pemerintah daerah yang masih menggunakan desain statis, sehingga tampilannya tidak optimal di perangkat mobile.
+  
+Dengan tren penggunaan perangkat mobile yang terus meningkat, penting bagi pengembang untuk memastikan bahwa desain responsif menjadi bagian integral dari setiap aplikasi web yang dibuat.
+<sumber : https://www.wordpressintegration.com/blog/responsive-web-design-benefits/>
+
+#  Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+
+Dalam **CSS Box Model**, terdapat tiga elemen penting yang mempengaruhi penataan elemen pada halaman web: **margin**, **border**, dan **padding**. Masing-masing memiliki fungsi yang berbeda dalam mengatur jarak dan batas elemen. Berikut adalah penjelasan perbedaan di antara ketiganya serta cara implementasinya:
+
+### 1. **Margin**
+Margin adalah ruang kosong di **luar** elemen, yang menciptakan jarak antara elemen satu dengan elemen lainnya. Margin bersifat **transparan**. Margin digunakan untuk memberikan jarak antara elemen dengan elemen lainnya di luar batas elemen tersebut.
+- **Cara implementasi**:
+  
+  ```css
+  element {
+      margin: 20px; /* Semua sisi (atas, kanan, bawah, kiri) memiliki margin 20px */
+      margin-top: 10px;  /* Margin atas */
+      margin-right: 15px; /* Margin kanan */
+      margin-bottom: 10px; /* Margin bawah */
+      margin-left: 15px;  /* Margin kiri */
+  }
+  ```
+
+### 2. **Border**
+Border adalah garis yang mengelilingi padding dan konten. Border berada **di luar padding** tetapi **di dalam margin**. Border berfungsi untuk memberikan batas visual di sekitar elemen, dan dapat diatur warna, ketebalan, dan gayanya.
+- **Cara implementasi**:
+
+  ```css
+  element {
+      border: 2px solid black; /* Border hitam dengan ketebalan 2px */
+      border-style: dotted; /* Gaya border menjadi dotted */
+      border-color: red; /* Warna border menjadi merah */
+      border-width: 3px; /* Lebar border 3px */
+  }
+  ```
+
+### 3. **Padding**
+Padding adalah ruang di **dalam border** yang mengelilingi konten. Padding memberi jarak antara konten dan border. Padding juga bersifat **transparan**. Padding digunakan untuk menambahkan ruang di dalam elemen antara konten dengan border elemen tersebut.
+- **Cara implementasi**:
+
+  ```css
+  element {
+      padding: 10px; /* Semua sisi (atas, kanan, bawah, kiri) memiliki padding 10px */
+      padding-top: 5px; /* Padding atas */
+      padding-right: 8px; /* Padding kanan */
+      padding-bottom: 5px; /* Padding bawah */
+      padding-left: 8px; /* Padding kiri */
+  }
+  ```
+
+### Contoh Gabungan Implementasi:
+
+```css
+.box {
+    width: 200px;
+    padding: 20px;        /* Memberikan jarak di dalam elemen */
+    border: 2px solid blue; /* Border biru 2px di sekitar elemen */
+    margin: 30px;         /* Memberikan jarak di luar elemen */
+}
+```
+
+### Ilustrasi Perbedaannya:
+1. **Padding**: Mengontrol jarak **di dalam** elemen antara konten dan border.
+2. **Border**: Mengelilingi elemen dan membatasi antara padding dan margin.
+3. **Margin**: Mengontrol jarak **di luar** elemen untuk memisahkannya dari elemen lain di sekitar. 
+
+<sumber : https://www.w3schools.com/Css/css_boxmodel.asp>
+
+1. Flexbox (CSS Flexible Box Layout)
+Flexbox adalah model layout satu dimensi di CSS yang dirancang untuk mengatur tata letak elemen-elemen dalam satu baris (row) atau kolom (column). Flexbox memungkinkan pengaturan dan pengelolaan ruang antar elemen serta penyelarasan elemen secara efisien, terutama dalam tata letak responsif.
+
+Kegunaan Flexbox:
+- Menyusun elemen secara fleksibel dalam arah horizontal atau vertikal.
+- Memudahkan pengaturan tata letak responsif dengan penyesuaian otomatis berdasarkan ukuran layar.
+- Pengaturan penyelarasan elemen baik secara horizontal maupun vertikal, misalnya untuk memusatkan elemen dalam kontainer.
+- Pengaturan distribusi ruang di antara elemen-elemen yang ada di dalam kontainer, baik untuk ruang di antara - elemen maupun ruang di sekitar mereka.
+Contoh Kode Flexbox:
+css
+Copy code
+.wrapper {
+    display: flex; /* Mengaktifkan flexbox */
+    justify-content: center; /* Memusatkan elemen secara horizontal */
+    align-items: center; /* Memusatkan elemen secara vertikal */
+    height: 100vh; /* Kontainer dengan tinggi 100% dari viewport */
+}
+
+.wrapper > div {
+    flex: 1; /* Membuat elemen dalam kontainer memiliki ukuran yang sama */
+}
+Pada contoh di atas:
+
+display: flex; mengaktifkan Flexbox pada kontainer .wrapper.
+justify-content: center; memusatkan elemen secara horizontal.
+align-items: center; memusatkan elemen secara vertikal.
+
+Kelebihan Flexbox:
+- Pengaturan tata letak yang fleksibel: Elemen-elemen dapat disusun dalam baris atau kolom, dan ukuran serta urutannya dapat diubah.
+- Mudah digunakan untuk tata letak responsif.
+- Mendukung semua browser utama.
+Kekurangan Flexbox:
+- Tidak ideal untuk tata letak dua dimensi (misalnya grid besar dengan baris dan kolom).
+
+2. CSS Grid Layout
+CSS Grid adalah model layout dua dimensi yang dirancang untuk menyusun elemen dalam baris dan kolom. Dengan CSS Grid developer dapat mengatur elemen-elemen dalam tata letak yang lebih kompleks, seperti mengelola seluruh halaman atau membagi tata letak dalam beberapa bagian.
+
+Kegunaan CSS Grid:
+- Membuat tata letak dua dimensi yang lebih kompleks, di mana elemen-elemen dapat ditempatkan di dalam baris dan kolom.
+- Mengelola ruang antara elemen-elemen dalam sebuah grid, termasuk mengatur ukuran dan posisi elemen secara eksplisit di dalam grid.
+- Mendukung penempatan otomatis elemen dalam grid, yang berguna untuk tata letak responsif yang fleksibel.
+- Membagi halaman menjadi beberapa area besar, misalnya header, sidebar, main content, dan footer.
+Contoh Kode CSS Grid:
+css
+Copy code
+.wrapper {
+    display: grid; /* Mengaktifkan Grid Layout */
+    grid-template-columns: repeat(3, 1fr); /* Membuat 3 kolom dengan lebar yang sama */
+    grid-template-rows: auto; /* Baris dengan tinggi otomatis */
+    gap: 10px; /* Jarak antara kolom dan baris */
+}
+
+.wrapper > div {
+    background-color: lightgray;
+    padding: 10px;
+}
+Pada contoh di atas:
+
+grid-template-columns: repeat(3, 1fr); membuat tiga kolom dengan ukuran yang sama.
+gap: 10px; mengatur jarak antara kolom dan baris di grid.
+
+Kelebihan CSS Grid:
+- Ideal untuk tata letak dua dimensi: Mengelola elemen dalam baris dan kolom.
+- Penempatan otomatis: Elemen dapat ditempatkan secara otomatis dalam grid.
+- Mudah membuat tata letak halaman yang kompleks, misalnya dashboard atau layout yang terdiri dari berbagai area.
+Kekurangan CSS Grid:
+- Tidak didukung di beberapa browser lama atau browser tertentu, seperti Opera Mini.
+
+# 4
+
+### 1. Implementasi Fungsi untuk Menghapus dan Mengedit Produk
+
+a. Mengedit Produk
+1. Saya membuat path baru di `urls.py` untuk mengedit produk.
+   ```python
+   path('edit-product/<uuid:id>', edit_product, name='edit_product'),
+   ```
+
+2. Saya membuat fungsi `edit_product` di `views.py` yang menerima `id` produk. Di sini, saya mengambil objek produk dari database, lalu render form dengan data produk yang ada.
+   ```python
+   def edit_product(request, id):
+    # Get mood entry berdasarkan id
+    product = Product.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = productForm(request.POST or None, instance=product)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_product.html", context)
+   ```
+
+3. Saya membuat file `edit_product.html` untuk menampilkan form edit produk dengan styling menggunakan CSS framework.
+
+b. Menghapus Produk
+1. Saya membuat path baru di `urls.py` untuk menghapus produk.
+   ```python
+   path('delete/<uuid:id>', delete_product, name='delete_product'),
+   ```
+
+2. **Buat Fungsi di Views**:
+   - Saya membuat fungsi `delete_product` yang menghapus produk berdasarkan `id`.
+   ```python
+   def delete_product(request, id):
+    # Get mood berdasarkan id
+    eachProduct = Product.objects.get(pk = id)
+    # Hapus mood
+    eachProduct.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
+   ```
+
+### 2. Kustomisasi Desain Halaman
+
+a. Kustomisasi Halaman Login, Register, dan Tambah Produk
+1. **Halaman Login dan Register**:
+   - Saya membuat tampilan halaman login dan register menjadi lebih menarik dengan menambahkan styling menggunakan CSS framework yaitu tailwind, yang diinisiasi pada base html
+   ```python
+   {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block meta %} {% endblock meta %}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="{% static 'css/global.css' %}"/>
+  </head>
+  <body>
+    {% block content %} {% endblock content %}
+  </body>
+</html>
+```
+
+2. Saya memastikan form untuk menambah produk mudah digunakan dan memiliki desain yang menarik dengan komponen UI dari framework yang dipilih.
+
+b. Kustomisasi Halaman Daftar Produk
+
+1. Di template `main.html`, saya menggunakan kondisional untuk menampilkan gambar dan pesan jika tidak ada produk.
+   ```html
+   {% if products.count == 0 %}
+       <div class="no-products">
+           <img src="{% static 'path/to/image.png' %}" alt="No Products">
+           <p>Belum ada produk yang terdaftar.</p>
+       </div>
+   {% else %}
+       {% for product in products %}
+           <div class="card">
+               <h3>{{ product.name }}</h3>
+               <p>{{ product.description }}</p>
+               <a href="{% url 'edit_product' product.id %}" class="btn-edit">Edit</a>
+               <a href="{% url 'delete_product' product.id %}" class="btn-delete">Hapus</a>
+           </div>
+       {% endfor %}
+   {% endif %}
+   ```
+
+3. Saya menggunakan card untuk menampilkan produk dengan desain yang berbeda dari tutorial, serta memastikan card tersebut responsif.
+
+#### c. Membuat Navigation Bar (Navbar)
+1. Saya membuat navbar di template 'navbar.html'
+   ```html
+
+2. Saya menambahkan kelas responsif dari CSS framework untuk navbar agar berfungsi baik di perangkat mobile dan desktop.
+
+3. Setelah implementasi, saya melakukan testing untuk memastikan semua fungsi bekerja dengan baik. Saya melakukan penyesuaian desain dan responsivitas sesuai dengan kebutuhan pengguna dan feedback yang diterima.

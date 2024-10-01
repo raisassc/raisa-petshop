@@ -1,0 +1,21 @@
+<div class="product-card flex-none w-full sm:w-64 border border-purple-200 rounded-lg p-4 bg-white text-center shadow-md scroll-snap-align-center space-y-4 transition-transform transform hover:scale-105 hover:shadow-xl">
+    <h4 class="text-lg font-bold text-purple-800">{{ product_entry.name }}</h4>
+    <img src="{{ product_entry.product_image.url }}" alt="Product Image" class="w-full h-48 object-cover rounded-lg">
+    <div class="space-y-2">
+        <p class="text-sm text-gray-600"><span class="font-semibold">Flavour:</span> {{ product_entry.flavour }}</p>
+        <p class="text-sm text-gray-600"><span class="font-semibold">Price:</span> Rp{{ product_entry.price }}</p>
+        <p class="text-sm text-gray-600"><span class="font-semibold">Description:</span> {{ product_entry.description }}</p>
+        <p class="text-sm text-gray-600"><span class="font-semibold">Netto:</span> {{ product_entry.netto }} kg</p>
+        <p class="text-sm text-gray-600"><span class="font-semibold">Category:</span> {{ product_entry.category }}</p>
+        <p class="text-sm text-gray-600"><span class="font-semibold">Stock:</span> {{ product_entry.stock }}</p>
+        <p class="text-sm text-gray-600"><span class="font-semibold">Expired Date:</span> {{ product_entry.exp_date }}</p>
+    </div>
+    <div class="mt-4 flex flex-col sm:flex-row space-x-0 sm:space-x-2 justify-center">
+        <a href="{% url 'main:edit_product' product_entry.pk %}">
+            <button class="bg-purple-500 text-white rounded px-4 py-2 hover:bg-purple-600">Edit</button>
+        </a>
+        <a href="{% url 'main:delete_product' product_entry.pk %}">
+            <button class="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600">Delete</button>
+        </a>
+    </div>
+</div>
