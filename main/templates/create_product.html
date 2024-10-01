@@ -41,7 +41,10 @@
         <tr>
           <td class="pt-4">{{ form.product_image.label }}</td>
           <td class="pt-4">
-            <input type="file" name="{{ form.product_image }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" accept="image/png, image/jpeg">
+            <input type="file" name="{{ form.product_image.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" accept="image/png, image/jpeg">
+            {% if form.product_image.value %}
+                <img src="{{ form.product_image.value.url }}" alt="Uploaded Image" class="mt-2 max-w-full h-auto" />
+            {% endif %}
             {% if form.product_image.errors %}
               <p class="text-red-600 text-sm">{{ form.product_image.errors }}</p>
             {% endif %}
