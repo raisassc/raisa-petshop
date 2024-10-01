@@ -1,61 +1,101 @@
 {% extends 'base.html' %}
 {% include 'navbar.html' %}
 {% block content %}
-<div class="max-w-xl mx-auto mt-10 bg-purple-100 p-6 rounded-lg shadow-md">
-  <h2 class="text-center text-2xl font-bold text-purple-800 mb-5">Add New Product</h2>
-  
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    
-    <div class="mb-4">
-      <label for="id_name" class="block text-purple-700 font-bold mb-1">Name</label>
-      {{ form.name }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_flavour" class="block text-purple-700 font-bold mb-1">Flavour</label>
-      {{ form.flavour }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_price" class="block text-purple-700 font-bold mb-1">Price</label>
-      {{ form.price }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_product_image" class="block text-purple-700 font-bold mb-1">Product Image</label>
-      {{ form.product_image }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_description" class="block text-purple-700 font-bold mb-1">Description</label>
-      {{ form.description }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_netto" class="block text-purple-700 font-bold mb-1">Netto</label>
-      {{ form.netto }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_category" class="block text-purple-700 font-bold mb-1">Category</label>
-      {{ form.category }}
-    </div>
-    
-    <div class="mb-4">
-      <label for="id_stock" class="block text-purple-700 font-bold mb-1">Stock</label>
-      {{ form.stock }}
-    </div>
-    
-    <div class="flex justify-between">
-      <button type="submit" class="bg-purple-600 text-white py-2 px-4 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-600">
-        Add Product
-      </button>
-      <button type="reset" class="bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-300">
-        Reset Form
-      </button>
-    </div>
-  </form>
-</div>
-{% endblock %}
 
+<div class="min-h-screen bg-purple-50 py-10">
+  <div class="max-w-3xl mx-auto bg-purple-100 p-8 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold text-purple-800 text-center mb-6">Add New Product</h1>
+    
+    <!-- Form for Adding New Product -->
+    <form method="POST" enctype="multipart/form-data" class="space-y-4">
+      {% csrf_token %}
+      <table class="w-full">
+        <tr>
+          <td class="pt-4">{{ form.name.label }}</td>
+          <td class="pt-4">
+            <input type="text" name="{{ form.name.name }}" value="{{ form.name.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.name.label }}">
+            {% if form.name.errors %}
+              <p class="text-red-600 text-sm">{{ form.name.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.flavour.label }}</td>
+          <td class="pt-4">
+            <input type="text" name="{{ form.flavour.name }}" value="{{ form.flavour.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.flavour.label }}">
+            {% if form.flavour.errors %}
+              <p class="text-red-600 text-sm">{{ form.flavour.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.price.label }}</td>
+          <td class="pt-4">
+            <input type="number" name="{{ form.price.name }}" value="{{ form.price.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.price.label }}">
+            {% if form.price.errors %}
+              <p class="text-red-600 text-sm">{{ form.price.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.product_image }}</td>
+          <td class="pt-4">
+            <input type="file" name="{{ form.product_image.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" accept="image/png, image/jpeg">
+            {% if form.product_image.errors %}
+              <p class="text-red-600 text-sm">{{ form.product_image.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.description.label }}</td>
+          <td class="pt-4">
+            <textarea name="{{ form.description.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.description.label }}">{{ form.description.value }}</textarea>
+            {% if form.description.errors %}
+              <p class="text-red-600 text-sm">{{ form.description.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.netto.label }}</td>
+          <td class="pt-4">
+            <input type="number" name="{{ form.netto.name }}" value="{{ form.netto.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.netto.label }}">
+            {% if form.netto.errors %}
+              <p class="text-red-600 text-sm">{{ form.netto.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.category.label }}</td>
+          <td class="pt-4">
+            <input type="text" name="{{ form.category.name }}" value="{{ form.category.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.category.label }}">
+            {% if form.category.errors %}
+              <p class="text-red-600 text-sm">{{ form.category.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4">{{ form.stock.label }}</td>
+          <td class="pt-4">
+            <input type="number" name="{{ form.stock.name }}" value="{{ form.stock.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.stock.label }}">
+            {% if form.stock.errors %}
+              <p class="text-red-600 text-sm">{{ form.stock.errors }}</p>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td class="pt-4"></td>
+          <td class="pt-4">
+            <div class="flex justify-between">
+              <!-- Submit Button -->
+              <input type="submit" value="Add Product" class="py-2 px-6 bg-purple-600 text-white rounded-lg cursor-pointer hover:bg-purple-700 transition-all duration-300">
+              <!-- Reset Button -->
+              <input type="reset" value="Reset Form" class="py-2 px-6 bg-gray-300 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-400 transition-all duration-300">
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
