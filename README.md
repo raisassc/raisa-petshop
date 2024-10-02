@@ -479,11 +479,11 @@ Beberapa alasan mengapa responsive design penting adalah:
 4. **Peningkatan Konversi dan Penjualan**: Desain yang responsif memudahkan pengguna untuk mengakses informasi atau melakukan pembelian dari perangkat apa pun, sehingga meningkatkan peluang konversi dan penjualan.
 
 **Contoh aplikasi yang sudah menerapkan responsive design**:
-- **Spotify**: Website Spotify dapat diakses dengan baik dari berbagai perangkat dengan tampilan yang menyesuaikan secara otomatis sesuai ukuran layar.
-- **Airbnb**: Desain responsif Airbnb membuat pengguna mudah mencari dan memesan akomodasi dari berbagai perangkat, baik dari ponsel, tablet, maupun komputer.
+- **Scele**: Website Scele dapat diakses dengan baik dari berbagai perangkat dengan tampilan yang menyesuaikan secara otomatis sesuai ukuran layar.
+- **Instagram**
 
 **Contoh aplikasi yang belum menerapkan responsive design**:
-- **Situs-situs web lama** yang dirancang sebelum tren desain responsif seperti situs pemerintah daerah yang masih menggunakan desain statis, sehingga tampilannya tidak optimal di perangkat mobile.
+- **Situs-situs web lama** yang dirancang sebelum tren desain responsif seperti https://www.tagteamsigns.com/ dimana ketika di buka di mobile itu tampilannya sama dengan yang di website dekstop, website agoda juga demikian.
   
 Dengan tren penggunaan perangkat mobile yang terus meningkat, penting bagi pengembang untuk memastikan bahwa desain responsif menjadi bagian integral dari setiap aplikasi web yang dibuat.
 <sumber : https://www.wordpressintegration.com/blog/responsive-web-design-benefits/>
