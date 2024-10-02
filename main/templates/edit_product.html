@@ -1,77 +1,141 @@
 {% extends 'base.html' %}
-
 {% load static %}
-{% include 'navbar.html' %}
+{% block meta %}
+<title>Edit Product</title>
+{% endblock meta %}
+
 {% block content %}
+{% include 'navbar.html' %}
+<div class="flex flex-col min-h-screen bg-purple-100">
+  <div class="container mx-auto px-4 py-8 mt-16 max-w-xl">
+    <h1 class="text-3xl font-bold text-center mb-8 text-purple-700">Edit Product</h1>
+  
+    <div class="bg-white rounded-lg p-6 form-style">
+      <form method="POST" enctype="multipart/form-data" class="space-y-6">
+          {% csrf_token %}
+          
+          <!-- Product Image -->
+          <div class="flex flex-col">
+            <label for="product_image" class="mb-2 font-semibold text-purple-700">Product Image</label>
+            <input type="file" name="product_image" id="product_image" class="border-2 border-purple-500 text-purple-600 p-2 rounded-md w-full" />
+            
+            {% for error in form.product_image.errors %}
+                <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+            {% endfor %}
+        </div>
 
-<div class="bg-purple-100 py-10 px-5 min-h-screen">
-    <div class="container mx-auto max-w-lg bg-purple-100 shadow-lg rounded-lg p-8">
-        <h1 class="text-3xl font-bold text-purple-700 mb-6 text-center">Edit Product</h1>
+          <!-- Name -->
+          <div class="flex flex-col">
+              <label for="{{ form.name.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.name.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.name }}
+              </div>
+              {% for error in form.name.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
 
-        <form method="POST" enctype="multipart/form-data" class="space-y-4">
-            {% csrf_token %}
-            <table class="w-full">
-                <tr>
-                    <td class="pt-4">{{ form.name.label }}</td>
-                    <td class="pt-4">
-                        <input type="text" name="{{ form.name.name }}" value="{{ form.name.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.name.label }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.flavour.label }}</td>
-                    <td class="pt-4">
-                        <input type="text" name="{{ form.flavour.name }}" value="{{ form.flavour.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.flavour.label }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.price.label }}</td>
-                    <td class="pt-4">
-                        <input type="number" name="{{ form.price.name }}" value="{{ form.price.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.price.label }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.product_image.label }}</td>
-                    <td class="pt-4">
-                        <input type="file" name="{{ form.product_image.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.description.label }}</td>
-                    <td class="pt-4">
-                        <textarea name="{{ form.description.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.description.label }}">{{ form.description.value }}</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.netto.label }}</td>
-                    <td class="pt-4">
-                        <input type="number" name="{{ form.netto.name }}" value="{{ form.netto.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.netto.label }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.category.label }}</td>
-                    <td class="pt-4">
-                        <input type="text" name="{{ form.category.name }}" value="{{ form.category.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.category.label }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4">{{ form.stock.label }}</td>
-                    <td class="pt-4">
-                        <input type="number" name="{{ form.stock.name }}" value="{{ form.stock.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.stock.label }}">
-                    </td>
-                </tr>
-                <tr>
-                    <td class="pt-4"></td>
-                    <td class="pt-4">
-                        <div class="flex justify-end">
-                            <button type="submit" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded-lg shadow-md transition duration-300">
-                                Edit Product
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-        </form>
+          <!-- Flavour -->
+          <div class="flex flex-col">
+              <label for="{{ form.flavour.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.flavour.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.flavour }}
+              </div>
+              {% for error in form.flavour.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Price -->
+          <div class="flex flex-col">
+              <label for="{{ form.price.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.price.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.price }}
+              </div>
+              {% for error in form.price.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Description -->
+          <div class="flex flex-col">
+              <label for="{{ form.description.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.description.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.description }}
+              </div>
+              {% for error in form.description.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Netto -->
+          <div class="flex flex-col">
+              <label for="{{ form.netto.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.netto.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.netto }}
+              </div>
+              {% for error in form.netto.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Category -->
+          <div class="flex flex-col">
+              <label for="{{ form.category.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.category.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.category }}
+              </div>
+              {% for error in form.category.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Stock -->
+          <div class="flex flex-col">
+              <label for="{{ form.stock.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.stock.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.stock }}
+              </div>
+              {% for error in form.stock.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Expiration Date -->
+          <div class="flex flex-col">
+              <label for="{{ form.exp_date.id_for_label }}" class="mb-2 font-semibold text-purple-700">
+                  {{ form.exp_date.label }}
+              </label>
+              <div class="w-full">
+                  {{ form.exp_date }}
+              </div>
+              {% for error in form.exp_date.errors %}
+                  <p class="mt-1 text-sm text-red-600">{{ error }}</p>
+              {% endfor %}
+          </div>
+
+          <!-- Submit Button -->
+          <div class="flex justify-center mt-6">
+              <button type="submit" class="bg-purple-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out w-full">
+                  Edit Product
+              </button>
+          </div>
+      </form>
     </div>
+  </div>
 </div>
-
 {% endblock %}
