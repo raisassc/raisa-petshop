@@ -34,9 +34,11 @@ def create_product(request):
             product_entry = form.save(commit=False)
             product_entry.user = request.user
             product_entry.save()
+            print(request.FILES)
             return redirect('main:show_main')
     else:
         form = productForm()
+        print(form.errors)
 
     context = {"form": form}
     return render(request, "create_product.html", context)
