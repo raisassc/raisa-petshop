@@ -14,7 +14,7 @@
         <tr>
           <td class="pt-4">{{ form.name.label }}</td>
           <td class="pt-4">
-            {{ form.name|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.name.label}) }}
+            <input type="text" name="{{ form.name.name }}" value="{{ form.name.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.name.label }}">
             {% if form.name.errors %}
               <p class="text-red-600 text-sm">{{ form.name.errors }}</p>
             {% endif %}
@@ -23,7 +23,7 @@
         <tr>
           <td class="pt-4">{{ form.flavour.label }}</td>
           <td class="pt-4">
-            {{ form.flavour|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.flavour.label}) }}
+            <input type="text" name="{{ form.flavour.name }}" value="{{ form.flavour.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.flavour.label }}">
             {% if form.flavour.errors %}
               <p class="text-red-600 text-sm">{{ form.flavour.errors }}</p>
             {% endif %}
@@ -32,7 +32,7 @@
         <tr>
           <td class="pt-4">{{ form.price.label }}</td>
           <td class="pt-4">
-            {{ form.price|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.price.label}) }}
+            <input type="number" name="{{ form.price.name }}" value="{{ form.price.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.price.label }}">
             {% if form.price.errors %}
               <p class="text-red-600 text-sm">{{ form.price.errors }}</p>
             {% endif %}
@@ -41,9 +41,9 @@
         <tr>
           <td class="pt-4">{{ form.product_image.label }}</td>
           <td class="pt-4">
-            {{ form.product_image|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'accept': 'image/png, image/jpeg'}) }}
+            <input type="file" name="{{ form.product_image.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" accept="image/png, image/jpeg">
             {% if form.product_image.value %}
-                <img src="{{ form.product_image.value.url }}" alt="Uploaded Image" class="mt-2 max-w-full h-auto" />
+              <img src="{{ form.product_image.value.url }}" alt="Uploaded Image" class="mt-2 max-w-full h-auto" />
             {% endif %}
             {% if form.product_image.errors %}
               <p class="text-red-600 text-sm">{{ form.product_image.errors }}</p>
@@ -53,7 +53,7 @@
         <tr>
           <td class="pt-4">{{ form.description.label }}</td>
           <td class="pt-4">
-            {{ form.description|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.description.label}) }}
+            <textarea name="{{ form.description.name }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.description.label }}">{{ form.description.value }}</textarea>
             {% if form.description.errors %}
               <p class="text-red-600 text-sm">{{ form.description.errors }}</p>
             {% endif %}
@@ -62,7 +62,7 @@
         <tr>
           <td class="pt-4">{{ form.netto.label }}</td>
           <td class="pt-4">
-            {{ form.netto|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.netto.label}) }}
+            <input type="number" name="{{ form.netto.name }}" value="{{ form.netto.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.netto.label }}">
             {% if form.netto.errors %}
               <p class="text-red-600 text-sm">{{ form.netto.errors }}</p>
             {% endif %}
@@ -71,7 +71,7 @@
         <tr>
           <td class="pt-4">{{ form.category.label }}</td>
           <td class="pt-4">
-            {{ form.category|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.category.label}) }}
+            <input type="text" name="{{ form.category.name }}" value="{{ form.category.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.category.label }}">
             {% if form.category.errors %}
               <p class="text-red-600 text-sm">{{ form.category.errors }}</p>
             {% endif %}
@@ -80,7 +80,7 @@
         <tr>
           <td class="pt-4">{{ form.stock.label }}</td>
           <td class="pt-4">
-            {{ form.stock|as_widget(attrs={'class': 'border border-purple-300 rounded-lg p-2 w-full bg-purple-50', 'placeholder': form.stock.label}) }}
+            <input type="number" name="{{ form.stock.name }}" value="{{ form.stock.value }}" class="border border-purple-300 rounded-lg p-2 w-full bg-purple-50" placeholder="{{ form.stock.label }}">
             {% if form.stock.errors %}
               <p class="text-red-600 text-sm">{{ form.stock.errors }}</p>
             {% endif %}
@@ -90,9 +90,7 @@
           <td class="pt-4"></td>
           <td class="pt-4">
             <div class="flex justify-between">
-              <!-- Submit Button -->
               <input type="submit" value="Add Product" class="py-2 px-6 bg-purple-600 text-white rounded-lg cursor-pointer hover:bg-purple-700 transition-all duration-300">
-              <!-- Reset Button -->
               <input type="reset" value="Reset Form" class="py-2 px-6 bg-gray-300 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-400 transition-all duration-300">
             </div>
           </td>
