@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% block meta %}
+<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.7/dist/purify.min.js"></script>
+{% endblock meta %}
 {% include 'navbar.html' %}
 <div class="flex items-center justify-between p-4 bg-purple-50">
   <div class="flex items-center">
@@ -12,18 +15,73 @@
   <div class="title text-center text-5xl font-bold mb-5 text-purple-700">Raisa Pet Shop 🐾</div>
 
   <div class="carousel-container relative w-full max-w-3xl overflow-hidden flex items-center justify-center">
-      <div class="product-container flex overflow-x-auto scroll-smooth gap-4 p-5 box-border max-w-[400px]">
-          {% if product_entries %}
-              {% for product_entry in product_entries %}
-                  {% include 'card_product.html' %}
-              {% endfor %}
-          {% else %}
-              <!-- Gambar Kucing Sedih jika tidak ada produk -->
-              <div class="flex flex-col items-center">
-                  <img src="{% static 'images/sad_cat.gif' %}" alt="Sad Cat" class="w-48 h-48 mb-4">
-                  <p class="text-purple-600 font-semibold">Oops! Tidak ada produk yang tersedia.</p>
+    <div class="product-container flex overflow-x-auto scroll-smooth gap-4 p-5 box-border w-full">
+    <div id="product_entry_cards"></div>
+    <div id="crudModal" tabindex="-1" aria-hidden="true" style="padding-top:15rem; padding-bottom:2rem;" class="hidden fixed inset-0 z-50 w-full flex items-center justify-center bg-gray-800 bg-opacity-50 overflow-x-hidden overflow-y-auto transition-opacity duration-300 ease-out">
+        <div id="crudModalContent" class="relative bg-white rounded-lg shadow-lg w-5/6 sm:w-3/4 md:w-1/2 lg:w-1/3 mx-4 sm:mx-0 transform scale-95 opacity-0 transition-transform transition-opacity duration-300 ease-out">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
+              Add New Product
+            </h3>
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" id="closeModalBtn">
+              <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+              </svg>
+              <span class="sr-only">Close modal</span>
+            </button>
+          </div>
+          <!-- Modal body -->
+          <div class="px-6 py-4 space-y-6 form-style">
+            <form id="productEntryForm">
+              <div class="container mx-auto max-w-lg bg-purple-100 shadow-lg rounded-lg p-8">
+                <h1 class="text-3xl font-bold text-purple-700 mb-6 text-center">Create Product</h1>
+                <tr>
+                  <td class="text-right pr-4">Product Image</td>
+                  <td><input type="file" name="product_image" class="border-2 border-purple-500 text-purple-600 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Name</td>
+                  <td><input type="text" name="name" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Flavour</td>
+                  <td><input type="text" name="flavour" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Price</td>
+                  <td><input type="number" name="price" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Description</td>
+                  <td><textarea name="description" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required></textarea></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Netto</td>
+                  <td><input type="number" name="netto" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Category</td>
+                  <td><input type="text" name="category" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Stock</td>
+                  <td><input type="number" name="stock" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>
+              <tr>
+                  <td class="text-right pr-4">Expiration Date</td>
+                  <td><input type="date" name="exp_date" class="border-2 border-indigo-700 text-gray-700 p-2 rounded-md w-full" required /></td>
+              </tr>              
               </div>
-          {% endif %}
+            </form>
+          </div>
+          <!-- Modal footer -->
+          <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2 p-6 border-t border-gray-200 rounded-b justify-center md:justify-end">
+            <button type="button" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg" id="cancelButton">Cancel</button>
+            <button type="submit" id="submitProductEntry" form="productEntryForm" class="bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg">Save</button>
+          </div>
+        </div>
+      </div>
       </div>
   </div>
 
@@ -31,6 +89,9 @@
       <a href="{% url 'main:create_product' %}">
           <button class="py-2 px-5 bg-purple-500 text-white rounded hover:bg-purple-600">Add New Product</button>
       </a>
+      <button data-modal-target="crudModal" data-modal-toggle="crudModal" class="btn bg-indigo-700 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" onclick="showModal();">
+        Add New Product by AJAX
+      </button>
   </div>
 
   <h5 class="mt-2 text-purple-600">Sesi terakhir login: {{ last_login }}</h5>
@@ -50,4 +111,107 @@
       background-color: #a87cc6;
   }
 </style>
+<script>
+    function addProductEntry() {
+        fetch("{% url 'main:add_product_entry_ajax' %}", {
+        method: "POST",
+        body: new FormData(document.querySelector('#productEntryForm')),
+        })
+        .then(response => refreshProductEntries())
+        hideModal()
+
+        document.getElementById("productEntryForm").reset(); 
+        document.querySelector("[data-modal-toggle='crudModal']").click();
+
+        return false;
+    }
+    async function getProductEntries(){
+        return fetch("{% url 'main:show_json' %}").then((res) => res.json())
+    }
+    const modal = document.getElementById('crudModal');
+    const modalContent = document.getElementById('crudModalContent');
+
+  function showModal() {
+      const modal = document.getElementById('crudModal');
+      const modalContent = document.getElementById('crudModalContent');
+
+      modal.classList.remove('hidden'); 
+      setTimeout(() => {
+        modalContent.classList.remove('opacity-0', 'scale-95');
+        modalContent.classList.add('opacity-100', 'scale-100');
+      }, 50); 
+  }
+
+  function hideModal() {
+      const modal = document.getElementById('crudModal');
+      const modalContent = document.getElementById('crudModalContent');
+
+      modalContent.classList.remove('opacity-100', 'scale-100');
+      modalContent.classList.add('opacity-0', 'scale-95');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150); 
+  }
+
+  document.getElementById("cancelButton").addEventListener("click", hideModal);
+  document.getElementById("closeModalBtn").addEventListener("click", hideModal);
+  async function refreshProductEntries() {
+    document.getElementById("product_entry_cards").innerHTML = "";
+    document.getElementById("product_entry_cards").className = "";
+    const productEntries = await getProductEntries();
+    let htmlString = "";
+    let classNameString = "";
+
+    if (productEntries.length === 0) {
+        classNameString = "flex flex-col items-center justify-center min-h-[24rem] p-6";
+        htmlString = `
+            <div class="flex flex-col items-center justify-center min-h-[24rem] p-6">
+                <img src="{% static 'image/sedih-banget.png' %}" alt="Sad face" class="w-32 h-32 mb-4"/>
+                <p class="text-center text-gray-600 mt-4">Oops! Tidak ada produk yang tersedia.</p>
+            </div>
+        `;
+    }
+    else {
+        classNameString = "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-20"; // Sesuaikan grid jika ada lebih dari satu produk
+        productEntries.forEach((item) => {
+            const name = DOMPurify.sanitize(item.fields.name);
+            const flavour = DOMPurify.sanitize(item.fields.flavour);
+            const description = DOMPurify.sanitize(item.fields.description);
+            const category = DOMPurify.sanitize(item.fields.category);
+
+            htmlString += `
+            <div class="product-card flex-none w-full sm:w-64 border border-purple-200 rounded-lg p-4 bg-white text-center shadow-md scroll-snap-align-center space-y-4 transition-transform transform hover:scale-105 hover:shadow-xl">
+                <h4 class="text-lg font-bold text-purple-800">${name}</h4>
+                <img src="/media/${item.fields.product_image}" alt="Product Image" class="w-full h-48 object-cover rounded-lg">
+                <div class="space-y-2">
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Flavour:</span> ${flavour}</p>
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Price:</span> Rp${item.fields.price}</p>
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Description:</span> ${description}</p>
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Netto:</span> ${item.fields.netto} kg</p>
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Category:</span> ${category}</p>
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Stock:</span> ${item.fields.stock}</p>
+                    <p class="text-sm text-gray-600"><span class="font-semibold">Expired Date:</span> ${item.fields.exp_date}</p>
+                </div>
+                <div class="mt-4 flex flex-col sm:flex-row space-x-0 sm:space-x-2 justify-center">
+                    <a href="/edit-product/${item.pk}">
+                        <button class="bg-purple-500 text-white rounded px-4 py-2 hover:bg-purple-600">Edit</button>
+                    </a>
+                    <a href="/delete/${item.pk}">
+                        <button class="bg-red-500 text-white rounded px-4 py-2 hover:bg-red-600">Delete</button>
+                    </a>
+                </div>
+            </div>
+            `;
+        });
+    }
+    document.getElementById("product_entry_cards").className = classNameString;
+    document.getElementById("product_entry_cards").innerHTML = htmlString;
+}
+refreshProductEntries();
+document.getElementById("productEntryForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    addProductEntry();
+  })
+  </script>
 {% endblock %}

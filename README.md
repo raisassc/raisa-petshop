@@ -721,3 +721,98 @@ b. Kustomisasi Halaman Daftar Produk
 2. Saya menambahkan kelas responsif dari CSS framework untuk navbar agar berfungsi baik di perangkat mobile dan desktop.
 
 3. Setelah implementasi, saya melakukan testing untuk memastikan semua fungsi bekerja dengan baik. Saya melakukan penyesuaian desain dan responsivitas sesuai dengan kebutuhan pengguna dan feedback yang diterima.
+
+</details>
+
+
+Tugas 6
+
+<details>
+
+# Jelaskan manfaat dari penggunaan JavaScript dalam pengembangan aplikasi web!
+
+1. Mudah Dipelajari dan Digunakan : JavaScript memiliki sintaks yang sederhana dan mudah dipahami, terinspirasi oleh bahasa pemrograman Java. Hal ini membuatnya cepat dipelajari oleh developer, terutama karena JavaScript digunakan hampir di setiap situs web dan aplikasi seluler untuk skrip sisi klien. Selain itu, dengan popularitas Node.js, JavaScript juga semakin sering digunakan untuk pengembangan backend.
+
+2. Platform-Independent: JavaScript dapat dimasukkan ke dalam halaman web apa pun dan berjalan di berbagai platform tanpa memerlukan perubahan. Dengan kemampuan ini, JavaScript memungkinkan pengembangan aplikasi yang tidak bergantung pada platform tertentu.
+
+3. Mengurangi Beban Server: JavaScript mampu menangani banyak operasi langsung di sisi klien, sehingga mengurangi beban kerja server. Misalnya, validasi form dapat dilakukan di browser pengguna tanpa perlu mengirim data ke server, mempercepat respons dan mengurangi lalu lintas jaringan.
+
+4. Meningkatkan Antarmuka Pengguna: JavaScript memungkinkan pengembang membuat antarmuka web yang lebih interaktif dan dinamis. Hal ini memudahkan pengguna untuk berinteraksi dengan aplikasi web secara lebih efisien, termasuk membuat konten yang mudah dicari dan memproses data yang kompleks dengan cepat.
+
+5. Mendukung Konkurensi: Dengan JavaScript, khususnya melalui *Node.js*, banyak instruksi dapat dijalankan secara paralel. Ini sangat membantu dalam menangani banyak permintaan secara bersamaan, yang membuat aplikasi dapat skalabilitas tinggi tanpa menghabiskan bandwidth yang besar.
+
+sumber : [https://aws.amazon.com/id/what-is/javascript/]
+
+#  Jelaskan fungsi dari penggunaan await ketika kita menggunakan fetch()! Apa yang akan terjadi jika kita tidak menggunakan await?
+await digunakan untuk menunggu hingga promise yang dikembalikan oleh fetch() selesai diproses (di-resolve). Pada dasarnya, fetch() mengembalikan sebuah promise yang mewakili operasi HTTP, dan dengan menggunakan await, kita memastikan bahwa JavaScript menunggu sampai operasi pengambilan data dari server selesai sebelum melanjutkan eksekusi kode berikutnya. Ini memungkinkan kita untuk menulis kode asynchronous yang lebih rapi dan mudah dibaca.
+
+Contoh penggunaan await dengan fetch():
+
+javascript
+Copy code
+async function getData() {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  console.log(data); // tidak akan dieksekusi sebelum fetch() selesai
+}
+Dalam contoh di atas, await menunda eksekusi hingga fetch() selesai mendapatkan respons dari server. Setelah itu, baris const data = await response.json(); akan diproses untuk menunggu parsing data ke JSON, dan kemudian data tersebut dicetak ke konsol.
+
+Apa yang akan terjadi jika kita tidak menggunakan await?
+
+Jika kita tidak menggunakan await, fungsi fetch() akan mengembalikan sebuah promise, dan JavaScript tidak akan menunggu hingga proses asynchronous selesai. Alih-alih menunggu data dari server, eksekusi kode berikutnya akan langsung dilanjutkan, yang bisa menyebabkan kesalahan ketika kita mencoba mengakses data yang belum selesai diambil.
+sumber :[https://www.matawebsite.com/blog/mengenal-async-await-javascript]
+
+#  Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Mengapa kita perlu menggunakan decorator csrf_exempt pada view yang akan digunakan untuk AJAX POST?
+Kita perlu menggunakan decorator @csrf_exempt pada view yang akan digunakan untuk AJAX POST ketika kita ingin *menonaktifkan mekanisme CSRF protection* (Cross-Site Request Forgery) yang secara default diaktifkan pada Django. CSRF protection bertujuan untuk melindungi aplikasi web dari serangan di mana pengguna tanpa sadar mengirimkan permintaan berbahaya ke server, misalnya melalui klik pada halaman berbahaya.
+
+Namun, dalam beberapa kasus, terutama saat kita menggunakan AJAX untuk mengirimkan data POST, CSRF protection dapat menyebabkan masalah jika *CSRF token tidak dikirimkan* atau *dikelola dengan benar* pada request. AJAX request biasanya tidak mengirimkan CSRF token secara otomatis, sehingga request tersebut bisa dianggap tidak valid oleh Django dan mengembalikan *403 Forbidden Error*.
+
+csrf_excempt digunakan karena beberapa alasan : 
+
+1. *Mencegah Error CSRF pada AJAX POST*: Jika AJAX request POST tidak mengirimkan token CSRF atau tokennya tidak sesuai, Django akan memblokir permintaan tersebut dan mengembalikan error. Dengan menambahkan @csrf_exempt, kita bisa menghindari error ini ketika kita tidak membutuhkan CSRF protection pada view tersebut.
+
+2. *Menggunakan API atau Request Eksternal: Terkadang, ketika bekerja dengan **API eksternal* atau sistem yang tidak mendukung CSRF tokens, menonaktifkan CSRF protection di endpoint view menjadi pilihan yang praktis.
+
+3. *Sederhana dan Cepat*: Jika kita yakin bahwa AJAX request tersebut aman dan berasal dari sumber tepercaya (misalnya dari domain aplikasi kita sendiri), kita bisa menggunakan @csrf_exempt untuk menonaktifkan proteksi CSRF pada view yang spesifik.
+
+### Contoh Penggunaan:
+
+python
+from django.views.decorators.csrf import csrf_exempt
+from django.http import JsonResponse
+
+@csrf_exempt
+def my_ajax_view(request):
+    if request.method == 'POST':
+        # Proses data dari AJAX POST
+        return JsonResponse({'status': 'success'})
+
+#### Alternatif: Mengelola Token CSRF Secara Benar
+Jika memungkinkan, alih-alih menonaktifkan CSRF protection, kita bisa mengelola token CSRF dengan benar dalam AJAX POST request, dengan cara berikut:
+1. Mengambil token CSRF dari template HTML.
+2. Mengirim token tersebut dalam header atau sebagai bagian dari data request AJAX.
+
+Ini lebih aman dibandingkan menggunakan @csrf_exempt, kecuali jika ada alasan yang jelas untuk menonaktifkannya.
+
+# Pada tutorial PBP minggu ini, pembersihan data input pengguna dilakukan di belakang (backend) juga. Mengapa hal tersebut tidak dilakukan di frontend saja?
+Pembersihan data input pengguna tidak hanya dilakukan di *frontend, tetapi juga di **backend* karena beberapa alasan penting terkait keamanan dan integritas data. Berikut adalah beberapa alasan mengapa validasi dan pembersihan data perlu dilakukan di backend, meskipun frontend juga melakukan validasi:
+
+### 1. *Keamanan*
+Validasi di frontend dapat dengan mudah diabaikan atau dimodifikasi oleh pengguna yang berniat jahat. Misalnya, seorang pengguna bisa mematikan JavaScript di browser mereka atau menggunakan alat pengujian seperti Postman untuk mengirimkan request langsung ke server tanpa melalui frontend. Jika hanya ada validasi di frontend, aplikasi akan rentan terhadap serangan *injection* atau *XSS* (Cross-Site Scripting), yang dapat menyebabkan kerusakan atau pencurian data.
+
+Dengan melakukan validasi dan pembersihan di backend, kita bisa memastikan bahwa data yang diterima oleh server adalah valid, terlepas dari apakah validasi frontend diikuti atau tidak.
+
+### 2. *Integritas Data*
+Pembersihan data di backend memastikan bahwa data yang disimpan dalam database selalu dalam format yang diharapkan. Validasi di backend memastikan bahwa data yang dimasukkan sesuai dengan aturan yang telah ditentukan, seperti panjang karakter, format tanggal, atau tipe data. Ini membantu mencegah *inkonsistensi data* yang bisa merusak aplikasi.
+
+### 3. *Frontend Bukanlah Perlindungan Terakhir*
+Frontend hanyalah lapisan pertama untuk kenyamanan dan user experience. Meskipun validasi di frontend dapat memberikan umpan balik instan kepada pengguna, itu bukanlah tempat yang cukup aman untuk bergantung sepenuhnya dalam hal pembersihan dan validasi data. Backend adalah tempat terakhir di mana semua input harus diperiksa dengan ketat.
+
+### 4. *Menghindari Serangan dari Sumber Eksternal*
+Selain pengguna biasa, backend juga harus dilindungi dari serangan atau request yang datang dari sumber eksternal. Jika hanya mengandalkan validasi frontend, maka sumber eksternal seperti API palsu atau aplikasi pihak ketiga yang terhubung ke sistem dapat mem-bypass validasi tersebut dan mengirim data yang berbahaya langsung ke server.
+
+### 5. *Validasi Lebih Kuat di Backend*
+Backend dapat melakukan validasi yang lebih kuat dan kompleks dibandingkan dengan frontend. Misalnya, backend dapat memeriksa data terhadap database, memvalidasi hubungan antar entitas, dan melakukan logika yang lebih rumit yang tidak mungkin dilakukan di frontend. 
+
+
