@@ -28,7 +28,7 @@ PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = True
 
 #list allowed_host
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id","http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id","https://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]
 
 
 # Application definition
@@ -132,3 +132,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'  # URL untuk mengakses media files
 MEDIA_ROOT = BASE_DIR / 'media'  # Folder fisik tempat media files disimpan
+
+CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id","https://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]

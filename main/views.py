@@ -13,6 +13,8 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
+from django.http import JsonResponse
+from django.core.validators import ValidationError
 
 @login_required(login_url='/login')
 
@@ -130,14 +132,30 @@ def add_product_entry_ajax(request):
     price = request.POST.get("price")
     description = strip_tags(request.POST.get("description"))
     netto = request.POST.get("netto")
-    category = strip_tags(request.POST.get("category"))  # Menambah panjang karakter untuk kategori
+    category = strip_tags(request.POST.get("category"))
     stock = request.POST.get("stock")
     exp_date = request.POST.get("exp_date")
     user = request.user
 
+    errors = {}
+
+    if not name:
+        errors['name'] = "Name field cannot be empty."
+    if not flavour:
+        errors['flavour'] = "Flavour field cannot be empty."
+    if not description:
+        errors['description'] = "Description field cannot be empty."
+    if not category:
+        errors['category'] = "Category field cannot be empty."
+
+    # Jika ada error, kembalikan respon dengan error
+    if errors:
+        return JsonResponse({'errors': errors}, status=400)
+
+    # Jika tidak ada error, lanjutkan menyimpan produk
     new_product = Product(
         product_image=product_image, name=name, flavour=flavour, price=price,
-        description=description, netto=netto, category=category, stock=stock,exp_date=exp_date,
+        description=description, netto=netto, category=category, stock=stock, exp_date=exp_date,
         user=user
     )
     new_product.save()
