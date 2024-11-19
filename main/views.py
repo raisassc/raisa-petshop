@@ -15,6 +15,11 @@ from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 from django.http import JsonResponse
 from django.core.validators import ValidationError
+import json
+from django.http import JsonResponse
+import base64
+from io import BytesIO
+from django.core.files.base import ContentFile
 
 @login_required(login_url='/login')
 
@@ -161,3 +166,43 @@ def add_product_entry_ajax(request):
     new_product.save()
 
     return HttpResponse(b"CREATED", status=201)
+
+@csrf_exempt
+def create_mood_flutter(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+
+            # Decode base64 image
+            product_image_data = data["product_image"]
+            if ';base64,' not in product_image_data:
+                 raise ValueError("The image data does not contain the expected ';base64,' delimiter.")
+            else:
+                format, imgstr = product_image_data.split(';base64,')
+            if product_image_data:
+                format, imgstr = product_image_data.split(';base64,')
+                ext = format.split('/')[1]
+                image_data = ContentFile(base64.b64decode(imgstr), name="product_image." + ext)
+            else:
+                image_data = None
+
+            new_product = Product.objects.create(
+                user=request.user,
+                product_image=image_data,  # Assign the image field
+                name=data["name"],
+                flavour=data["flavour"],
+                price=int(data["price"]),
+                description=data["description"],
+                netto=int(data["netto"]),
+                category=data["category"],
+                stock=int(data["stock"]),
+                exp_date=data["exp_date"],  # Assuming it's a string in the format "YYYY-MM-DD"
+            )
+
+            new_product.save()
+
+            return JsonResponse({"status": "success"}, status=200)
+        except KeyError as e:
+            return JsonResponse({"status": "error", "message": f"Missing key: {str(e)}"}, status=400)
+    else:
+        return JsonResponse({"status": "error"}, status=401)

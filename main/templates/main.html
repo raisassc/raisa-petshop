@@ -97,20 +97,6 @@
   <h5 class="mt-2 text-purple-600">Sesi terakhir login: {{ last_login }}</h5>
 </div>
 
-<style>
-  .product-container::-webkit-scrollbar {
-      height: 8px;
-  }
-
-  .product-container::-webkit-scrollbar-thumb {
-      background-color: #c3a6d9;
-      border-radius: 4px;
-  }
-
-  .product-container::-webkit-scrollbar-thumb:hover {
-      background-color: #a87cc6;
-  }
-</style>
 <script>
     function addProductEntry() {
     fetch("{% url 'main:add_product_entry_ajax' %}", {

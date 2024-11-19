@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-_uvqf*tof@&=xyc9821scmc=^^=b+s^7km4&-nz-u@4^a5bo-y
 
 # SECURITY WARNING: don't run with debug turned on in production!
 PRODUCTION = os.getenv("PRODUCTION", False)
-DEBUG = True
+DEBUG = not PRODUCTION
 
 #list allowed_host
 ALLOWED_HOSTS = ["localhost", "127.0.0.1", "raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'authentication',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
@@ -52,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'corsheaders.middleware.CorsMiddleware'
 ]
 
 ROOT_URLCONF = 'raisa_petshop.urls'
@@ -134,3 +137,16 @@ MEDIA_URL = '/media/'  # URL untuk mengakses media files
 MEDIA_ROOT = BASE_DIR / 'media'  # Folder fisik tempat media files disimpan
 
 CSRF_TRUSTED_ORIGINS = ["http://localhost","http://127.0.0.1","http://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id","https://raisa-sakila-raisapetshop2.pbp.cs.ui.ac.id"]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",       # Allows any port on localhost
+    r"^http://10\.0\.2\.2:\d+$",     # Allows any port on Android emulator
+    r'^/media/.*$' ,
+]
